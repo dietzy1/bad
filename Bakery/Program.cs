@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Bakery.Models;
+using Bakery.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Data layer
-
+builder.Services.AddSingleton<OrderRepository>();
+builder.Services.AddSingleton<BakingGoodRepository>();
+builder.Services.AddSingleton<BatchRepository>();
+builder.Services.AddSingleton<IngredientRepository>();
 
 //Do some fuckery c#??
 
