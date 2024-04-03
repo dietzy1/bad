@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Bakery.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -63,5 +63,12 @@ namespace Bakery.Controllers
 
         }
 
+        [HttpGet("{id}/packets")]
+        public IActionResult GetPacketsOfOrder(int id)
+        {
+            // Return trackids
+            // Måske også lave det her til en select? /v1/orders/packets?select=Trackid
+            return Ok();
+        }
     }
 }

@@ -9,7 +9,7 @@ using Bakery.Models;
 
 namespace Bakery.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     [ApiController]
     public class BakeryController : ControllerBase
     {

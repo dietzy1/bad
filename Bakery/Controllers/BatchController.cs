@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/[controller]")]
     [ApiController]
     public class BatchController : ControllerBase
     {
@@ -12,6 +12,18 @@ namespace Bakery.Controllers
         public BatchController(BakeryContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("{id}/ingredients")]
+        public IActionResult GetIngredientsOfBatch(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("average_delay")]
+        public IActionResult GetAverageDelay()
+        {
+            return Ok();
         }
     }
 }
