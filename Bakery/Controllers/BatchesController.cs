@@ -17,7 +17,7 @@ namespace Bakery.Controllers
             IngredientRepository = ingredientRepository;
         }
 
-        [HttpGet("{id}/ingredients")]
+        [HttpGet("{id}/Ingredients")]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredientsOfBatch(int id)
         {
             // Make sure batch exists
@@ -36,7 +36,7 @@ namespace Bakery.Controllers
             return Ok(ingredientDtos);
         }
 
-        [HttpGet("average_delay")]
+        [HttpGet("AverageDelay")]
         public async Task<IActionResult> GetAverageDelay()
         {
             double? averageDelay = await BatchRepository.GetAverageDelay();
