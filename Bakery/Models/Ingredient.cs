@@ -1,4 +1,5 @@
 namespace Bakery.Models;
+
 public class Ingredient
 {
     public int IngredientId { get; set; }
