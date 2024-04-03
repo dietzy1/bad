@@ -24,7 +24,7 @@ public class IngredientRepository : Repository
         return await Context.Ingredients.FindAsync(id);
     }
 
-    public async Task AddIngredient(Ingredient ingredient)
+    public async Task CreateIngredient(Ingredient ingredient)
     {
         await Context.Ingredients.AddAsync(ingredient);
         await Context.SaveChangesAsync();
