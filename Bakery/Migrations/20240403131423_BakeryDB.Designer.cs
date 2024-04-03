@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bakery.Migrations
 {
     [DbContext(typeof(BakeryContext))]
-    [Migration("20240403122820_BakeryDB")]
+    [Migration("20240403131423_BakeryDB")]
     partial class BakeryDB
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Bakery.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TotalQuantity")
+                    b.Property<int>("TotalQuantityOrdered")
                         .HasColumnType("int");
 
                     b.HasKey("BakingGoodId");
@@ -48,6 +48,26 @@ namespace Bakery.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("BakingGoods");
+
+                    b.HasData(
+                        new
+                        {
+                            BakingGoodId = 1,
+                            BakingGoodName = "Cake",
+                            TotalQuantityOrdered = 10
+                        },
+                        new
+                        {
+                            BakingGoodId = 2,
+                            BakingGoodName = "Cookie",
+                            TotalQuantityOrdered = 20
+                        },
+                        new
+                        {
+                            BakingGoodId = 3,
+                            BakingGoodName = "Bread",
+                            TotalQuantityOrdered = 30
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.Batch", b =>
@@ -57,9 +77,6 @@ namespace Bakery.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BatchId"));
-
-                    b.Property<int>("AmountOfGoods")
-                        .HasColumnType("int");
 
                     b.Property<int>("BakingGoodId")
                         .HasColumnType("int");
@@ -73,11 +90,48 @@ namespace Bakery.Migrations
                     b.Property<DateTime>("TargetStartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("TotalQuantityOrdered")
+                        .HasColumnType("int");
+
                     b.HasKey("BatchId");
 
                     b.HasIndex("BakingGoodId");
 
                     b.ToTable("Batches");
+
+                    b.HasData(
+                        new
+                        {
+                            BatchId = 1,
+                            BakingGoodId = 0,
+                            TargetFinishTime = new DateTime(2024, 4, 3, 17, 14, 22, 596, DateTimeKind.Local).AddTicks(1025),
+                            TargetStartTime = new DateTime(2024, 4, 3, 15, 14, 22, 596, DateTimeKind.Local).AddTicks(965),
+                            TotalQuantityOrdered = 10
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            BakingGoodId = 0,
+                            TargetFinishTime = new DateTime(2024, 4, 3, 17, 14, 22, 596, DateTimeKind.Local).AddTicks(1036),
+                            TargetStartTime = new DateTime(2024, 4, 3, 16, 14, 22, 596, DateTimeKind.Local).AddTicks(1033),
+                            TotalQuantityOrdered = 20
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            BakingGoodId = 0,
+                            TargetFinishTime = new DateTime(2024, 4, 3, 18, 14, 22, 596, DateTimeKind.Local).AddTicks(1041),
+                            TargetStartTime = new DateTime(2024, 4, 3, 17, 14, 22, 596, DateTimeKind.Local).AddTicks(1039),
+                            TotalQuantityOrdered = 30
+                        },
+                        new
+                        {
+                            BatchId = 4,
+                            BakingGoodId = 0,
+                            TargetFinishTime = new DateTime(2024, 4, 3, 19, 14, 22, 596, DateTimeKind.Local).AddTicks(1047),
+                            TargetStartTime = new DateTime(2024, 4, 3, 18, 14, 22, 596, DateTimeKind.Local).AddTicks(1045),
+                            TotalQuantityOrdered = 40
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.BatchIngredient", b =>
@@ -96,6 +150,68 @@ namespace Bakery.Migrations
                     b.HasIndex("IngredientId");
 
                     b.ToTable("BatchIngredient", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            BatchId = 1,
+                            IngredientId = 1,
+                            IngredientAmount = 100
+                        },
+                        new
+                        {
+                            BatchId = 1,
+                            IngredientId = 2,
+                            IngredientAmount = 50
+                        },
+                        new
+                        {
+                            BatchId = 1,
+                            IngredientId = 3,
+                            IngredientAmount = 20
+                        },
+                        new
+                        {
+                            BatchId = 1,
+                            IngredientId = 4,
+                            IngredientAmount = 10
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            IngredientId = 2,
+                            IngredientAmount = 10
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            IngredientId = 3,
+                            IngredientAmount = 10
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            IngredientId = 4,
+                            IngredientAmount = 5
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            IngredientId = 1,
+                            IngredientAmount = 5
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            IngredientId = 3,
+                            IngredientAmount = 10
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            IngredientId = 4,
+                            IngredientAmount = 50
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.Ingredient", b =>
@@ -106,21 +222,53 @@ namespace Bakery.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientId"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
                     b.Property<int?>("BatchId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Stock")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
 
                     b.HasKey("IngredientId");
 
                     b.HasIndex("BatchId");
 
                     b.ToTable("Ingredients");
+
+                    b.HasData(
+                        new
+                        {
+                            IngredientId = 1,
+                            Name = "Flour",
+                            Stock = 5000
+                        },
+                        new
+                        {
+                            IngredientId = 2,
+                            Name = "Sugar",
+                            Stock = 2000
+                        },
+                        new
+                        {
+                            IngredientId = 3,
+                            Name = "Butter",
+                            Stock = 500
+                        },
+                        new
+                        {
+                            IngredientId = 4,
+                            Name = "Egg",
+                            Stock = 250
+                        },
+                        new
+                        {
+                            IngredientId = 5,
+                            Name = "Milk",
+                            Stock = 50
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.Order", b =>
@@ -141,6 +289,26 @@ namespace Bakery.Migrations
                     b.HasKey("OrderId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = 1,
+                            DeliveryDate = new DateTime(2024, 4, 3, 23, 14, 22, 596, DateTimeKind.Local).AddTicks(1143),
+                            DeliveryPlace = "Storcenter Nord, Aarhus N, Denmark"
+                        },
+                        new
+                        {
+                            OrderId = 2,
+                            DeliveryDate = new DateTime(2024, 4, 4, 1, 14, 22, 596, DateTimeKind.Local).AddTicks(1148),
+                            DeliveryPlace = "Coop 365, Aarhus C, Denmark"
+                        },
+                        new
+                        {
+                            OrderId = 3,
+                            DeliveryDate = new DateTime(2024, 4, 4, 3, 14, 22, 596, DateTimeKind.Local).AddTicks(1152),
+                            DeliveryPlace = "Hos Perto Hansen, Aarhus V, Denmark"
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.OrderBakingGood", b =>
@@ -159,6 +327,26 @@ namespace Bakery.Migrations
                     b.HasIndex("BakingGoodId");
 
                     b.ToTable("OrderBakingGood", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = 1,
+                            BakingGoodId = 1,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            OrderId = 2,
+                            BakingGoodId = 2,
+                            Quantity = 20
+                        },
+                        new
+                        {
+                            OrderId = 3,
+                            BakingGoodId = 3,
+                            Quantity = 30
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.Packet", b =>
@@ -180,6 +368,26 @@ namespace Bakery.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Packets");
+
+                    b.HasData(
+                        new
+                        {
+                            PacketId = 1,
+                            OrderId = 0,
+                            TrackId = 0
+                        },
+                        new
+                        {
+                            PacketId = 2,
+                            OrderId = 0,
+                            TrackId = 0
+                        },
+                        new
+                        {
+                            PacketId = 3,
+                            OrderId = 0,
+                            TrackId = 0
+                        });
                 });
 
             modelBuilder.Entity("Bakery.Models.BakingGood", b =>
