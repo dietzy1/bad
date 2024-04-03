@@ -30,7 +30,7 @@ namespace Bakery.Controllers
             return Ok(orderDto);
         }
 
-        [HttpGet("{id}/baking_goods")]
+        [HttpGet("{id}/BakingGoods")]
         public async Task<ActionResult<IEnumerable<BakingGoodDto>>> GetBakingGoodsOfOrder(int id)
         {
             // Make sure order exists
@@ -47,7 +47,7 @@ namespace Bakery.Controllers
             return Ok(bakingGoodDtos);
         }
 
-        [HttpGet("{id}/packets")]
+        [HttpGet("{id}/Packets")]
         public async Task<ActionResult<IEnumerable<PacketDto>>> GetPacketsOfOrder(int id)
         {
             // Make sure order exists
