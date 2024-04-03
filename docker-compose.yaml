@@ -3,7 +3,7 @@ version: "1.0"
 services:
     db:
       image: mcr.microsoft.com/mssql/server:2019-latest
-      container_name: bakerydb
+      container_name: BakeryDB
       environment:
         ACCEPT_EULA: "Y"
         SA_PASSWORD: "SecretPassword123"

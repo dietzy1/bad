@@ -5,7 +5,7 @@
 namespace Bakery.Migrations
 {
     /// <inheritdoc />
-    public partial class bakerydb : Migration
+    public partial class BakeryDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
