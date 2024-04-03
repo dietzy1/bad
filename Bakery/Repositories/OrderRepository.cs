@@ -12,11 +12,11 @@ public class OrderRepository : Repository
         return await Context.Orders.FindAsync(id);
     }
 
-    public async Task<BakingGood[]> ListBakingGoodsForOrder(int orderId)
+    public async Task<IDictionary<string, int>> ListBakingGoodsForOrderWithQuantities(int orderId)
     {
-        return await Context.BakingGoods
-            .Where(i => i.OrderBakingGoods.Any(obg => obg.OrderId == orderId))
-            .ToArrayAsync();
+        return await Context.OrderBakingGoods
+            .Where(obg => obg.OrderId == orderId)
+            .ToDictionaryAsync(obg => obg.BakingGood.BakingGoodName, obg => obg.Quantity);
     }
 
     public async Task<Packet[]> ListPacketForOrder(int orderId)

@@ -31,20 +31,15 @@ namespace Bakery.Controllers
         }
 
         [HttpGet("{id}/baking_goods")]
-        public async Task<IActionResult> GetBakingGoodsOfOrder(int id)
+        public async Task<IActionResult> GetBakingGoodsOfOrderWithQuantities(int id)
         {
             // Make sure order exists
             if (await OrderRepository.GetOrderById(id) == null) return NotFound("Order not found");
 
-            // Get baking goods of order and transform it into a DTO
-            BakingGood[] bakingGoods = await BakingGoodRepository.ListBakingGoodsForOrder(id);
-            IList<BakingGoodDto> bakingGoodDtos = new List<BakingGoodDto>();
-            foreach (var bakingGood in bakingGoods)
-            {
-                bakingGoodDtos.Add(BakingGoodDto.FromEntity(bakingGood));
-
-            }
-            return Ok(bakingGoodDtos);
+            // Gets list of baking goods for an order in a dictionary with the quantity ordered as well
+            var bakingGoods = await OrderRepository.ListBakingGoodsForOrderWithQuantities(id);
+            
+            return Ok(bakingGoods);
         }
 
         [HttpGet("{id}/packets")]
