@@ -31,7 +31,7 @@ namespace Bakery.Controllers
         }
 
         [HttpGet("{id}/baking_goods")]
-        public async Task<IActionResult> GetBakingGoodsOfOrder(int id)
+        public async Task<ActionResult<IEnumerable<BakingGoodDto>>> GetBakingGoodsOfOrder(int id)
         {
             // Make sure order exists
             if (await OrderRepository.GetOrderById(id) == null) return NotFound("Order not found");
@@ -48,7 +48,7 @@ namespace Bakery.Controllers
         }
 
         [HttpGet("{id}/packets")]
-        public async Task<IActionResult> GetPacketsOfOrder(int id)
+        public async Task<ActionResult<IEnumerable<PacketDto>>> GetPacketsOfOrder(int id)
         {
             // Make sure order exists
             if (await OrderRepository.GetOrderById(id) == null) return NotFound("Order not found");
