@@ -42,6 +42,7 @@ public class BakeryContext : DbContext
             new Batch
             {
                 BatchId = 1,
+                BakingGoodId = 1,
                 TotalQuantityOrdered = 10,
                 TargetStartTime = DateTime.Now,
                 TargetFinishTime = DateTime.Now.AddHours(2),
@@ -50,6 +51,7 @@ public class BakeryContext : DbContext
             new Batch
             {
                 BatchId = 2,
+                BakingGoodId = 2,
                 TotalQuantityOrdered = 20,
                 TargetStartTime = DateTime.Now.AddHours(1),
                 TargetFinishTime = DateTime.Now.AddHours(2),
@@ -58,6 +60,7 @@ public class BakeryContext : DbContext
             new Batch
             {
                 BatchId = 3,
+                BakingGoodId = 3,
                 TotalQuantityOrdered = 30,
                 TargetStartTime = DateTime.Now.AddHours(2),
                 TargetFinishTime = DateTime.Now.AddHours(3),
@@ -66,6 +69,7 @@ public class BakeryContext : DbContext
             new Batch
             {
                 BatchId = 4,
+                BakingGoodId = 3,
                 TotalQuantityOrdered = 40,
                 TargetStartTime = DateTime.Now.AddHours(3),
                 TargetFinishTime = DateTime.Now.AddHours(4),
@@ -121,15 +125,21 @@ public class BakeryContext : DbContext
         modelBuilder.Entity<Packet>().HasData(
             new Packet
             {
-                PacketId = 1
+                PacketId = 1,
+                OrderId = 1,
+                TrackId = 1234321,
             },
             new Packet
             {
-                PacketId = 2
+                PacketId = 2,
+                OrderId = 1,
+                TrackId = 345313,
             },
             new Packet
             {
-                PacketId = 3
+                PacketId = 3,
+                OrderId = 2,
+                TrackId = 16332,
             }
         );
 
