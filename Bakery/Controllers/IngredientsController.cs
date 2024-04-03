@@ -18,7 +18,7 @@ namespace Bakery.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredients([FromQuery] string select)
         {
-            var ingredients = await IngredientRepository.GetIngredients();
+            var ingredients = await IngredientRepository.ListIngredients();
             
             IList<IngredientDto> ingredientDtos = new List<IngredientDto>();
             foreach (var ingredient in ingredients)
