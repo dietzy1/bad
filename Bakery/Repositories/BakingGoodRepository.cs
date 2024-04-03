@@ -7,9 +7,9 @@ public class BakingGoodRepository : Repository
 {
     public BakingGoodRepository(BakeryContext context) : base(context) { }
 
-    public async Task<BakingGood[]> ListBakingGoods()
+    public async Task<BakingGood[]> ListBakingGoodsAscending()
     {
-        return await Context.BakingGoods.ToArrayAsync();
+        return await Context.BakingGoods.OrderBy(bg => bg.BakingGoodName).ToArrayAsync();
     }
 
     public async Task<BakingGood[]> ListBakingGoodsForOrder(int orderId)
