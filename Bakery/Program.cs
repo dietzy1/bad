@@ -3,10 +3,6 @@ using Bakery.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
-
-
 //Controller layer injected by magic or what the fuck?
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>
