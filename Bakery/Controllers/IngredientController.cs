@@ -40,7 +40,7 @@ namespace Bakery.Controllers
                                 selectedProperties["Name"] = ingredient.Name;
                                 break;
                             case "quantity":
-                                selectedProperties["Quantity"] = ingredient.Amount;
+                                selectedProperties["Quantity"] = ingredient.Stock;
                                 break;
                         }
                     }

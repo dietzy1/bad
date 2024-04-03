@@ -4,7 +4,12 @@ namespace Bakery.Models
 {
     public class Packet
     {
-        [SQLite.PrimaryKey, AutoIncrement]
+        public int PacketId { get; set; }
         public int TrackId { get; set; }
+
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; } = null!;
+
+
     }
 }

@@ -22,11 +22,12 @@ namespace Bakery.Controllers
         {
             try
             {
+                /*
                 // Mangler model, skal rettes til
                 var selectedOrder = _context.Orders.FirstOrDefault(o => o.Id == id);
 
                 if (selectedOrder == null) return NotFound("Order not found");
-                
+
 
                 var selectedProperties = new Dictionary<string, object>();
                 var properties = select.Split(',');
@@ -43,6 +44,8 @@ namespace Bakery.Controllers
                     }
                 }
                 return Ok(selectedProperties);
+                */
+                return NotFound("Order not found"); //TEMP: Mangler model, skal rettes til
             }
             catch (Exception ex)
             {
@@ -53,11 +56,14 @@ namespace Bakery.Controllers
         [HttpGet("{id}/baking_goods")]
         public IActionResult GetBakingGoodsOfOrder(int id)
         {
+            /*
             var selectedOrder = _context.Orders.FirstOrDefault(o => o.Id == id);
 
             if (selectedOrder == null) return NotFound("Order not found");
 
             // Somehow get baking goods of the selectedOrder and return
+
+            */
 
             return Ok();
 
