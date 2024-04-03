@@ -28,6 +28,8 @@ public class BakeryContext : DbContext
 
         modelBuilder.Entity<BatchIngredient>().ToTable("BatchIngredient").HasKey(e => new { e.BatchId, e.IngredientId });
 
+
+
         modelBuilder.Entity<Ingredient>().HasData(
             new Ingredient { IngredientId = 1, Name = "Flour", Stock = 5000 },
             new Ingredient { IngredientId = 2, Name = "Sugar", Stock = 2000 },
@@ -71,6 +73,7 @@ public class BakeryContext : DbContext
             }
         );
 
+
         modelBuilder.Entity<BakingGood>().HasData(
             new BakingGood
             {
@@ -91,6 +94,7 @@ public class BakeryContext : DbContext
                 TotalQuantityOrdered = 30
             }
         );
+
 
         modelBuilder.Entity<Order>().HasData(
             new Order
@@ -214,6 +218,7 @@ public class BakeryContext : DbContext
                 IngredientAmount = 50
             }
         );
+
 
     }
 }
