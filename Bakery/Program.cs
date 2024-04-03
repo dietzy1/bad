@@ -16,10 +16,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Data layer
-builder.Services.AddSingleton<OrderRepository>();
-builder.Services.AddSingleton<BakingGoodRepository>();
-builder.Services.AddSingleton<BatchRepository>();
-builder.Services.AddSingleton<IngredientRepository>();
+builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<BakingGoodRepository>();
+builder.Services.AddScoped<BatchRepository>();
+builder.Services.AddScoped<IngredientRepository>();
 
 //Do some fuckery c#??
 
