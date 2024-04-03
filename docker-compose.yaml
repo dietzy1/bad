@@ -2,8 +2,8 @@ version: "1.0"
  
 services:
     db:
-      image: mcr.microsoft.com/azure-sql-edge
-      container_name: azure-sql-edge
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      container_name: bakerydb
       environment:
         ACCEPT_EULA: "Y"
         SA_PASSWORD: "SecretPassword123"
