@@ -187,9 +187,9 @@ namespace Bakery.Migrations
                 columns: new[] { "OrderId", "DeliveryDate", "DeliveryPlace" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 4, 4, 7, 28, 23, 1, DateTimeKind.Local).AddTicks(8200), "Storcenter Nord, Aarhus N, Denmark" },
-                    { 2, new DateTime(2024, 4, 4, 9, 28, 23, 1, DateTimeKind.Local).AddTicks(8210), "Coop 365, Aarhus C, Denmark" },
-                    { 3, new DateTime(2024, 4, 4, 11, 28, 23, 1, DateTimeKind.Local).AddTicks(8210), "Hos Perto Hansen, Aarhus V, Denmark" }
+                    { 1, new DateTime(2024, 4, 4, 8, 25, 36, 647, DateTimeKind.Local).AddTicks(3420), "Storcenter Nord, Aarhus N, Denmark" },
+                    { 2, new DateTime(2024, 4, 4, 10, 25, 36, 647, DateTimeKind.Local).AddTicks(3430), "Coop 365, Aarhus C, Denmark" },
+                    { 3, new DateTime(2024, 4, 4, 12, 25, 36, 647, DateTimeKind.Local).AddTicks(3430), "Hos Perto Hansen, Aarhus V, Denmark" }
                 });
 
             migrationBuilder.InsertData(
@@ -197,10 +197,10 @@ namespace Bakery.Migrations
                 columns: new[] { "BatchId", "BakingGoodId", "Delay", "TargetFinishTime", "TargetStartTime", "TotalQuantityOrdered" },
                 values: new object[,]
                 {
-                    { 1, 1, null, new DateTime(2024, 4, 4, 1, 28, 23, 1, DateTimeKind.Local).AddTicks(8130), new DateTime(2024, 4, 3, 23, 28, 23, 1, DateTimeKind.Local).AddTicks(8080), 10 },
-                    { 2, 2, null, new DateTime(2024, 4, 4, 1, 28, 23, 1, DateTimeKind.Local).AddTicks(8140), new DateTime(2024, 4, 4, 0, 28, 23, 1, DateTimeKind.Local).AddTicks(8140), 20 },
-                    { 3, 3, null, new DateTime(2024, 4, 4, 2, 28, 23, 1, DateTimeKind.Local).AddTicks(8150), new DateTime(2024, 4, 4, 1, 28, 23, 1, DateTimeKind.Local).AddTicks(8150), 30 },
-                    { 4, 3, null, new DateTime(2024, 4, 4, 3, 28, 23, 1, DateTimeKind.Local).AddTicks(8150), new DateTime(2024, 4, 4, 2, 28, 23, 1, DateTimeKind.Local).AddTicks(8150), 40 }
+                    { 1, 1, 20, new DateTime(2024, 4, 4, 2, 25, 36, 647, DateTimeKind.Local).AddTicks(3370), new DateTime(2024, 4, 4, 0, 25, 36, 647, DateTimeKind.Local).AddTicks(3320), 10 },
+                    { 2, 2, null, new DateTime(2024, 4, 4, 2, 25, 36, 647, DateTimeKind.Local).AddTicks(3380), new DateTime(2024, 4, 4, 1, 25, 36, 647, DateTimeKind.Local).AddTicks(3380), 20 },
+                    { 3, 3, null, new DateTime(2024, 4, 4, 3, 25, 36, 647, DateTimeKind.Local).AddTicks(3380), new DateTime(2024, 4, 4, 2, 25, 36, 647, DateTimeKind.Local).AddTicks(3380), 30 },
+                    { 4, 3, null, new DateTime(2024, 4, 4, 4, 25, 36, 647, DateTimeKind.Local).AddTicks(3390), new DateTime(2024, 4, 4, 3, 25, 36, 647, DateTimeKind.Local).AddTicks(3390), 40 }
                 });
 
             migrationBuilder.InsertData(

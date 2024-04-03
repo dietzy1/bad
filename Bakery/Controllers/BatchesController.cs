@@ -18,7 +18,7 @@ namespace Bakery.Controllers
         }
 
         [HttpGet("{id}/ingredients")]
-        public async Task<IActionResult> GetIngredientsOfBatch(int id)
+        public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredientsOfBatch(int id)
         {
             // Make sure batch exists
             if (await BatchRepository.GetBatchById(id) == null) return NotFound("Batch not found");
