@@ -15,6 +15,30 @@ namespace Bakery.Controllers
             IngredientRepository = ingredientRepository;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredients([FromQuery] string select)
+        {
+            var ingredients = await IngredientRepository.GetIngredients();
+            
+            IList<IngredientDto> ingredientDtos = new List<IngredientDto>();
+            foreach (var ingredient in ingredients)
+            {
+                var dto = new IngredientDto();
+                if (select == "Name,Quantity")
+                {
+                    dto.Name = ingredient.Name;
+                    dto.Stock = ingredient.Stock;
+                }
+                else
+                {
+                    dto = IngredientDto.FromEntity(ingredient);
+                }
+
+                ingredientDtos.Add(dto);
+            }
+            return Ok(ingredientDtos);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateIngredient([FromBody] CreateIngredientDto ingredientDto)
         {
