@@ -19,7 +19,7 @@ namespace Bakery.Controllers
         {
             try
             {
-                IEnumerable<Ingredient> bakingGoods = _context.BakingGoods;
+                IEnumerable<BakingGood> bakingGoods = _context.BakingGoods;
 
                 if (string.IsNullOrEmpty(select))
                 {
@@ -39,7 +39,7 @@ namespace Bakery.Controllers
                                 selectedProperties["Name"] = bakingGood.BakingGoodName;
                                 break;
                             case "totalquantityordered":
-                                selectedProperties["Total Quantity Ordered"] = bakingGood.TotalQuantity;
+                                selectedProperties["Total Quantity Ordered"] = bakingGood.TotalQuantityOrdered;
                                 break;
                         }
                     }
