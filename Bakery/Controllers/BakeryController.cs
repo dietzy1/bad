@@ -27,7 +27,7 @@ namespace Bakery.Controllers
 
         // GET: api/Bakery
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ingredient>>> Getingredients()
+        public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
         {
             return await _context.Ingredients.ToListAsync();
         }
