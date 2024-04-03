@@ -19,6 +19,11 @@ public class IngredientRepository : Repository
             .ToArrayAsync();
     }
 
+    public async Task<Ingredient[]> GetIngredients()
+    {
+        return await Context.Ingredients.ToArrayAsync();
+    }
+
     public async Task<Ingredient?> GetIngredientById(int id)
     {
         return await Context.Ingredients.FindAsync(id);
