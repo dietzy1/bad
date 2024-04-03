@@ -19,14 +19,14 @@ namespace Bakery.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrder(int id, string select)
+        public async Task<IActionResult> GetOrder(int id, string? select)
         {
             var selectedOrder = await OrderRepository.GetOrderById(id);
             if (selectedOrder == null) return NotFound("Order not found");
 
             OrderDto orderDto = OrderDto.FromEntity(selectedOrder);
-            orderDto.Select(select.Split(','));
-
+            if (select != null) orderDto.Select(select.Split(','));
+           
             return Ok(orderDto);
         }
 

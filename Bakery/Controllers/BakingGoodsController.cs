@@ -15,14 +15,15 @@ namespace Bakery.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BakingGoodDto>>> GetBakingGoods(string select)
+        public async Task<ActionResult<IEnumerable<BakingGoodDto>>> GetBakingGoods(string? select)
         {
             var bakingGoods = await BakingGoodRepository.ListBakingGoodsAscending();
             IList<BakingGoodDto> bakingGoodDtos = new List<BakingGoodDto>();
             foreach (var bakingGood in bakingGoods)
             {
                 var dto = BakingGoodDto.FromEntity(bakingGood);
-                dto.Select(select.Split(','));
+                if (select != null) dto.Select(select.Split(','));
+
                 bakingGoodDtos.Add(dto);
             }
 
