@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Bakery.Models;
@@ -27,16 +22,16 @@ namespace Bakery.Controllers
 
         // GET: api/Bakery
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ingredient>>> Getingredients()
+        public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
         {
-            return await _context.ingredients.ToListAsync();
+            return await _context.Ingredients.ToListAsync();
         }
 
         // GET: api/Bakery/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Ingredient>> GetIngredient(int id)
         {
-            var ingredient = await _context.ingredients.FindAsync(id);
+            var ingredient = await _context.Ingredients.FindAsync(id);
 
             if (ingredient == null)
             {
@@ -82,7 +77,7 @@ namespace Bakery.Controllers
         [HttpPost]
         public async Task<ActionResult<Ingredient>> PostIngredient(Ingredient ingredient)
         {
-            _context.ingredients.Add(ingredient);
+            _context.Ingredients.Add(ingredient);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetIngredient", new { id = ingredient.IngredientId }, ingredient);
@@ -92,13 +87,13 @@ namespace Bakery.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIngredient(int id)
         {
-            var ingredient = await _context.ingredients.FindAsync(id);
+            var ingredient = await _context.Ingredients.FindAsync(id);
             if (ingredient == null)
             {
                 return NotFound();
             }
 
-            _context.ingredients.Remove(ingredient);
+            _context.Ingredients.Remove(ingredient);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -106,7 +101,7 @@ namespace Bakery.Controllers
 
         private bool IngredientExists(int id)
         {
-            return _context.ingredients.Any(e => e.IngredientId == id);
+            return _context.Ingredients.Any(e => e.IngredientId == id);
         }
     }
 }
