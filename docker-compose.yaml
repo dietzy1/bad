@@ -1,0 +1,13 @@
+version: "1.0"
+ 
+services:
+    db:
+      image: mcr.microsoft.com/azure-sql-edge
+      container_name: azure-sql-edge
+      environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "SecretPassword123"
+        MSSQL_PID: "Developer"
+        
+      ports:
+        - 1433:1433

@@ -1,0 +1,9 @@
+{
+  "dotnet.defaultSolution": "Bakery.sln",
+  "editor.defaultFormatter": "ms-dotnettools.csharp",
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "editor.formatOnSave": true, // Optional: Format document on save
+  "csharp.format.enable": true // Optional: Enable C# formatting
+}
