@@ -46,7 +46,7 @@ public class BakeryContext : DbContext
                 TotalQuantityOrdered = 10,
                 TargetStartTime = DateTime.Now,
                 TargetFinishTime = DateTime.Now.AddHours(2),
-                Delay = null
+                Delay = 20
             },
             new Batch
             {
