@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bakery.Migrations
 {
     [DbContext(typeof(BakeryContext))]
-    [Migration("20240403212823_InitialBakery")]
+    [Migration("20240403222537_InitialBakery")]
     partial class InitialBakery
     {
         /// <inheritdoc />
@@ -104,32 +104,33 @@ namespace Bakery.Migrations
                         {
                             BatchId = 1,
                             BakingGoodId = 1,
-                            TargetFinishTime = new DateTime(2024, 4, 4, 1, 28, 23, 1, DateTimeKind.Local).AddTicks(8130),
-                            TargetStartTime = new DateTime(2024, 4, 3, 23, 28, 23, 1, DateTimeKind.Local).AddTicks(8080),
+                            Delay = 20,
+                            TargetFinishTime = new DateTime(2024, 4, 4, 2, 25, 36, 647, DateTimeKind.Local).AddTicks(3370),
+                            TargetStartTime = new DateTime(2024, 4, 4, 0, 25, 36, 647, DateTimeKind.Local).AddTicks(3320),
                             TotalQuantityOrdered = 10
                         },
                         new
                         {
                             BatchId = 2,
                             BakingGoodId = 2,
-                            TargetFinishTime = new DateTime(2024, 4, 4, 1, 28, 23, 1, DateTimeKind.Local).AddTicks(8140),
-                            TargetStartTime = new DateTime(2024, 4, 4, 0, 28, 23, 1, DateTimeKind.Local).AddTicks(8140),
+                            TargetFinishTime = new DateTime(2024, 4, 4, 2, 25, 36, 647, DateTimeKind.Local).AddTicks(3380),
+                            TargetStartTime = new DateTime(2024, 4, 4, 1, 25, 36, 647, DateTimeKind.Local).AddTicks(3380),
                             TotalQuantityOrdered = 20
                         },
                         new
                         {
                             BatchId = 3,
                             BakingGoodId = 3,
-                            TargetFinishTime = new DateTime(2024, 4, 4, 2, 28, 23, 1, DateTimeKind.Local).AddTicks(8150),
-                            TargetStartTime = new DateTime(2024, 4, 4, 1, 28, 23, 1, DateTimeKind.Local).AddTicks(8150),
+                            TargetFinishTime = new DateTime(2024, 4, 4, 3, 25, 36, 647, DateTimeKind.Local).AddTicks(3380),
+                            TargetStartTime = new DateTime(2024, 4, 4, 2, 25, 36, 647, DateTimeKind.Local).AddTicks(3380),
                             TotalQuantityOrdered = 30
                         },
                         new
                         {
                             BatchId = 4,
                             BakingGoodId = 3,
-                            TargetFinishTime = new DateTime(2024, 4, 4, 3, 28, 23, 1, DateTimeKind.Local).AddTicks(8150),
-                            TargetStartTime = new DateTime(2024, 4, 4, 2, 28, 23, 1, DateTimeKind.Local).AddTicks(8150),
+                            TargetFinishTime = new DateTime(2024, 4, 4, 4, 25, 36, 647, DateTimeKind.Local).AddTicks(3390),
+                            TargetStartTime = new DateTime(2024, 4, 4, 3, 25, 36, 647, DateTimeKind.Local).AddTicks(3390),
                             TotalQuantityOrdered = 40
                         });
                 });
@@ -294,19 +295,19 @@ namespace Bakery.Migrations
                         new
                         {
                             OrderId = 1,
-                            DeliveryDate = new DateTime(2024, 4, 4, 7, 28, 23, 1, DateTimeKind.Local).AddTicks(8200),
+                            DeliveryDate = new DateTime(2024, 4, 4, 8, 25, 36, 647, DateTimeKind.Local).AddTicks(3420),
                             DeliveryPlace = "Storcenter Nord, Aarhus N, Denmark"
                         },
                         new
                         {
                             OrderId = 2,
-                            DeliveryDate = new DateTime(2024, 4, 4, 9, 28, 23, 1, DateTimeKind.Local).AddTicks(8210),
+                            DeliveryDate = new DateTime(2024, 4, 4, 10, 25, 36, 647, DateTimeKind.Local).AddTicks(3430),
                             DeliveryPlace = "Coop 365, Aarhus C, Denmark"
                         },
                         new
                         {
                             OrderId = 3,
-                            DeliveryDate = new DateTime(2024, 4, 4, 11, 28, 23, 1, DateTimeKind.Local).AddTicks(8210),
+                            DeliveryDate = new DateTime(2024, 4, 4, 12, 25, 36, 647, DateTimeKind.Local).AddTicks(3430),
                             DeliveryPlace = "Hos Perto Hansen, Aarhus V, Denmark"
                         });
                 });
