@@ -1,4 +1,3 @@
-
 using SQLite;
 
 namespace Bakery.Models
