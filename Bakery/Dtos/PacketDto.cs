@@ -9,8 +9,8 @@ public class PacketDto : Dto
     {
         return new PacketDto
         {
-            PacketId = packet.PacketId,
-            OrderId = packet.OrderId,
+            //PacketId = packet.PacketId,
+            //OrderId = packet.OrderId,
             TrackId = packet.TrackId
         };
     }
