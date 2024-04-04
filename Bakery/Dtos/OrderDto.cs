@@ -23,5 +23,7 @@ public class OrderDto : Dto
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? DeliveryDate { get; set; }
+
+    public string? DeliveryCoordinates { get; set; } //Added this field in migration 2
 }
 
