@@ -1,6 +1,6 @@
 
 # Get current stock
-GET /v1/ingredients?select=Name,Quantity
+GET /v1/ingredients?select=Name,Stock
 
 # Get address and date for order
 GET /v1/orders/{id}?select=DeliveryPlace,DeliveryDate
