@@ -4,7 +4,6 @@ using Bakery.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Controller layer injected by magic or what the fuck?
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BakeryContext>(options =>
 
@@ -20,8 +19,6 @@ builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<BakingGoodRepository>();
 builder.Services.AddScoped<BatchRepository>();
 builder.Services.AddScoped<IngredientRepository>();
-
-//Do some fuckery c#??
 
 var app = builder.Build();
 
