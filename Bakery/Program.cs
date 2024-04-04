@@ -35,7 +35,8 @@ using (var scope = app.Services.CreateScope())
     {
         if (dbContext.Database.CanConnect())
         {
-            logger.LogInformation("Successfully connected to the database.");
+            logger.LogInformation("Successfully connected to the database! Migrating...");
+            dbContext.Database.Migrate();
         }
         else
         {
@@ -44,11 +45,9 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "An error occurred while connecting to the database.");
+        logger.LogError(ex, "An error occurred while connecting or migrating the database.");
     }
 }
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -57,17 +56,5 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.MapGet("/hello", () =>
-{
-    var hello = "hello";
-    return hello;
-
-}
-).WithName("GetHello").WithOpenApi();
-
 app.MapControllers();
-
 app.Run();
-
