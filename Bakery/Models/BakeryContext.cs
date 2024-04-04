@@ -42,8 +42,8 @@ public class BakeryContext : DbContext
                 BatchId = 1,
                 BakingGoodId = 1,
                 TotalQuantityOrdered = 10,
-                TargetStartTime = DateTime.Now,
-                TargetFinishTime = DateTime.Now.AddHours(2),
+                TargetStartTime = DateTime.Now.ToString(),
+                TargetFinishTime = DateTime.Now.AddHours(2).ToString(),
                 Delay = 20
             },
             new Batch
@@ -51,8 +51,8 @@ public class BakeryContext : DbContext
                 BatchId = 2,
                 BakingGoodId = 2,
                 TotalQuantityOrdered = 20,
-                TargetStartTime = DateTime.Now.AddHours(1),
-                TargetFinishTime = DateTime.Now.AddHours(2),
+                TargetStartTime = DateTime.Now.AddHours(1).ToString(),
+                TargetFinishTime = DateTime.Now.AddHours(2).ToString(),
                 Delay = 40
             },
             new Batch
@@ -60,8 +60,8 @@ public class BakeryContext : DbContext
                 BatchId = 3,
                 BakingGoodId = 3,
                 TotalQuantityOrdered = 30,
-                TargetStartTime = DateTime.Now.AddHours(2),
-                TargetFinishTime = DateTime.Now.AddHours(3),
+                TargetStartTime = DateTime.Now.AddHours(2).ToString(),
+                TargetFinishTime = DateTime.Now.AddHours(3).ToString(),
                 Delay = 50
             },
             new Batch
@@ -69,8 +69,8 @@ public class BakeryContext : DbContext
                 BatchId = 4,
                 BakingGoodId = 3,
                 TotalQuantityOrdered = 40,
-                TargetStartTime = DateTime.Now.AddHours(3),
-                TargetFinishTime = DateTime.Now.AddHours(4),
+                TargetStartTime = DateTime.Now.AddHours(3).ToString(),
+                TargetFinishTime = DateTime.Now.AddHours(4).ToString(),
                 Delay = null
             }
         );
@@ -102,19 +102,19 @@ public class BakeryContext : DbContext
             new Order
             {
                 OrderId = 1,
-                DeliveryDate = DateTime.Now.AddHours(8),
+                DeliveryDate = DateTime.Now.AddHours(8).ToString(),
                 DeliveryPlace = "Storcenter Nord, Aarhus N, Denmark",
             },
             new Order
             {
                 OrderId = 2,
-                DeliveryDate = DateTime.Now.AddHours(10),
+                DeliveryDate = DateTime.Now.AddHours(10).ToString(),
                 DeliveryPlace = "Coop 365, Aarhus C, Denmark",
             },
             new Order
             {
                 OrderId = 3,
-                DeliveryDate = DateTime.Now.AddHours(12),
+                DeliveryDate = DateTime.Now.AddHours(12).ToString(),
                 DeliveryPlace = "Hos Perto Hansen, Aarhus V, Denmark",
             }
 

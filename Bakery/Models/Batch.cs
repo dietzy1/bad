@@ -6,8 +6,8 @@ namespace Bakery.Models
     {
         public int BatchId { get; set; }
         public int TotalQuantityOrdered { get; set; }
-        public DateTime TargetStartTime { get; set; }
-        public DateTime TargetFinishTime { get; set; }
+        public string? TargetStartTime { get; set; }//This was migrated in migration 2
+        public string? TargetFinishTime { get; set; }//This was migrated in migration 2
         public int? Delay { get; set; }
         public int BakingGoodId { get; set; }
         public virtual BakingGood BakingGood { get; set; } = null!;

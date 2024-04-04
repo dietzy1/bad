@@ -22,6 +22,6 @@ public class OrderDto : Dto
     public string? DeliveryPlace { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public DateTime? DeliveryDate { get; set; }
+    public string? DeliveryDate { get; set; }
 }
 
