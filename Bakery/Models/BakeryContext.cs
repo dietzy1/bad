@@ -42,8 +42,8 @@ public class BakeryContext : DbContext
                 BatchId = 1,
                 BakingGoodId = 1,
                 TotalQuantityOrdered = 10,
-                TargetStartTime = DateTime.Now.ToString(),
-                TargetFinishTime = DateTime.Now.AddHours(2).ToString(),
+                TargetStartTime = DateTime.Now.ToString("ddMMyyyy HHmm"),
+                TargetFinishTime = DateTime.Now.AddHours(2).ToString("ddMMyyyy HHmm"),
                 Delay = 20
             },
             new Batch
@@ -51,8 +51,8 @@ public class BakeryContext : DbContext
                 BatchId = 2,
                 BakingGoodId = 2,
                 TotalQuantityOrdered = 20,
-                TargetStartTime = DateTime.Now.AddHours(1).ToString(),
-                TargetFinishTime = DateTime.Now.AddHours(2).ToString(),
+                TargetStartTime = DateTime.Now.AddHours(1).ToString("ddMMyyyy HHmm"),
+                TargetFinishTime = DateTime.Now.AddHours(2).ToString("ddMMyyyy HHmm"),
                 Delay = 40
             },
             new Batch
@@ -60,8 +60,8 @@ public class BakeryContext : DbContext
                 BatchId = 3,
                 BakingGoodId = 3,
                 TotalQuantityOrdered = 30,
-                TargetStartTime = DateTime.Now.AddHours(2).ToString(),
-                TargetFinishTime = DateTime.Now.AddHours(3).ToString(),
+                TargetStartTime = DateTime.Now.AddHours(2).ToString("ddMMyyyy HHmm"),
+                TargetFinishTime = DateTime.Now.AddHours(3).ToString("ddMMyyyy HHmm"),
                 Delay = 50
             },
             new Batch
@@ -69,9 +69,10 @@ public class BakeryContext : DbContext
                 BatchId = 4,
                 BakingGoodId = 3,
                 TotalQuantityOrdered = 40,
-                TargetStartTime = DateTime.Now.AddHours(3).ToString(),
-                TargetFinishTime = DateTime.Now.AddHours(4).ToString(),
-                Delay = null
+                TargetStartTime = DateTime.Now.AddHours(3).ToString("ddMMyyyy HHmm"),
+                TargetFinishTime = DateTime.Now.AddHours(4).ToString("ddMMyyyy HHmm"),
+                Delay = null,
+
             }
         );
 
