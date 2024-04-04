@@ -24,7 +24,7 @@ namespace Bakery.Controllers
             foreach (var ingredient in ingredients)
             {
                 var dto = new IngredientDto();
-                if (select == "Name,Quantity")
+                if (select == "Name,Stock")
                 {
                     dto.Name = ingredient.Name;
                     dto.Stock = ingredient.Stock;
