@@ -11,7 +11,7 @@ namespace Bakery.Models
         public int? Delay { get; set; }
         public int BakingGoodId { get; set; }
         public virtual BakingGood BakingGood { get; set; } = null!;
-        public virtual ICollection<Ingredient> Ingredients { get; set; } = null!;
+        //public virtual ICollection<Ingredient> Ingredients { get; set; } = null!;
         public virtual ICollection<BatchIngredient> BatchIngredients { get; set; } = null!;
 
 

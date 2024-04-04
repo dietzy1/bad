@@ -28,8 +28,6 @@ public class BakeryContext : DbContext
 
         modelBuilder.Entity<BatchIngredient>().ToTable("BatchIngredient").HasKey(e => new { e.BatchId, e.IngredientId });
 
-
-
         modelBuilder.Entity<Ingredient>().HasData(
             new Ingredient { IngredientId = 1, Name = "Flour", Stock = 5000 },
             new Ingredient { IngredientId = 2, Name = "Sugar", Stock = 2000 },
