@@ -47,17 +47,20 @@ namespace Bakery.Controllers
         public async Task<IActionResult> GetPacketsOfOrder(int id)
         {
             // Make sure order exists
-            if (await OrderRepository.GetOrderById(id) == null) return NotFound("Order not found");
-
+            var selectedOrder = await OrderRepository.GetOrderById(id);
+            if (selectedOrder == null) return NotFound("Order not found");
+            
+            
             // Get packets of order and transform it into a DTO
             Packet[] packets = await OrderRepository.ListPacketForOrder(id);
             IList<PacketDto> packetDtos = new List<PacketDto>();
+            
             foreach (var packet in packets)
             {
                 packetDtos.Add(PacketDto.FromEntity(packet));
             }
-
-            return Ok(packetDtos);
+            
+            return Ok(new {deliveryPlace = selectedOrder.DeliveryPlace, deliveryCoordinates = selectedOrder.DeliveryCoordinates, packets = packetDtos});
         }
     }
 }
