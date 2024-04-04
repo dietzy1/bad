@@ -19,6 +19,13 @@ public class IngredientRepository : Repository
             .ToArrayAsync();
     }
 
+    public async Task<Allergen[]> ListAllergensOfIngredient(int ingredientId)
+    {
+        return await Context.Allergens
+            .Where(a => a.Ingredients.Any(i => i.IngredientId == ingredientId))
+            .ToArrayAsync();
+    }
+
     public async Task<Ingredient?> GetIngredientById(int id)
     {
         return await Context.Ingredients.FindAsync(id);

@@ -15,6 +15,7 @@ public class BakeryContext : DbContext
     public DbSet<BakingGood> BakingGoods { get; set; } = null!;
     public DbSet<Batch> Batches { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<Allergen> Allergens { get; set; } = null!;
 
     public DbSet<OrderBakingGood> OrderBakingGoods { get; set; } = null!;
 
@@ -35,6 +36,22 @@ public class BakeryContext : DbContext
             new Ingredient { IngredientId = 4, Name = "Egg", Stock = 250 },
             new Ingredient { IngredientId = 5, Name = "Milk", Stock = 50 }
         );
+        modelBuilder.Entity<Ingredient>()
+            .HasMany(i => i.Allergens)
+                .WithMany(a => a.Ingredients)
+                .UsingEntity<Dictionary<string, object>>(
+                    "IngredientAllergen",
+                    r => r.HasOne<Allergen>().WithMany().HasForeignKey("AllergenId"),
+                    l => l.HasOne<Ingredient>().WithMany().HasForeignKey("IngredientId"),
+                    je =>
+                    {
+                        je.HasKey("IngredientId", "AllergenId");
+                        je.HasData(
+                            new { IngredientId = 1, AllergenId = 1 },
+                            new { IngredientId = 3, AllergenId = 2 },
+                            new { IngredientId = 4, AllergenId = 3 }
+                        );
+                    });
 
         modelBuilder.Entity<Batch>().HasData(
             new Batch
@@ -121,7 +138,24 @@ public class BakeryContext : DbContext
                 DeliveryPlace = "Hos Perto Hansen, Aarhus V, Denmark",
                 DeliveryCoordinates = "60.1833, 13.2039",
             }
+        );
 
+        modelBuilder.Entity<Allergen>().HasData(
+            new Allergen
+            {
+                AllergenId = 1,
+                Name = "Gluten"
+            },
+            new Allergen
+            {
+                AllergenId = 2,
+                Name = "Lactose"
+            },
+            new Allergen
+            {
+                AllergenId = 3,
+                Name = "Nuts"
+            }
         );
 
         modelBuilder.Entity<Packet>().HasData(

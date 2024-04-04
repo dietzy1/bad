@@ -7,12 +7,22 @@ public class IngredientDto : Dto
 {
     public static IngredientDto FromEntity(Ingredient ingredient)
     {
-        return new IngredientDto
+        var dto = new IngredientDto
         {
             IngredientId = ingredient.IngredientId,
             Stock = ingredient.Stock,
             Name = ingredient.Name
         };
+        if (ingredient.Allergens != null)
+        {
+            dto.Allergens = new List<AllergenDto>();
+            foreach (var allergen in ingredient.Allergens)
+            {
+                dto.Allergens.Add(AllergenDto.FromEntity(allergen));
+            }
+        }
+
+        return dto;
     }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -23,4 +33,7 @@ public class IngredientDto : Dto
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Name { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<AllergenDto>? Allergens { get; set; }
 }
