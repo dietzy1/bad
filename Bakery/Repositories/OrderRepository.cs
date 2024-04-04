@@ -14,7 +14,7 @@ public class OrderRepository : Repository
 
     public async Task<IDictionary<string, int>> ListBakingGoodsForOrderWithQuantities(int orderId)
     {
-        return await Context.OrderBakingGoods
+        return await Context.OrderBakingGoods.Include(obg => obg.BakingGood)
             .Where(obg => obg.OrderId == orderId)
             .ToDictionaryAsync(obg => obg.BakingGood.BakingGoodName, obg => obg.Quantity);
     }

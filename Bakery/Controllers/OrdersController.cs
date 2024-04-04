@@ -39,6 +39,7 @@ namespace Bakery.Controllers
             // Gets list of baking goods for an order in a dictionary with the quantity ordered as well
             var bakingGoods = await OrderRepository.ListBakingGoodsForOrderWithQuantities(id);
             
+            
             return Ok(bakingGoods);
         }
 
