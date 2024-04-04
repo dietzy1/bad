@@ -6,4 +6,5 @@ public class Ingredient
     public int Stock { get; set; }
     public required string Name { get; set; }
     public virtual ICollection<BatchIngredient> BatchIngredients { get; set; } = null!;
+    public ICollection<Allergen> Allergens { get; set; } = null!;
 }
