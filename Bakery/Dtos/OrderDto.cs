@@ -11,7 +11,8 @@ public class OrderDto : Dto
         {
             OrderId = order.OrderId,
             DeliveryPlace = order.DeliveryPlace,
-            DeliveryDate = order.DeliveryDate
+            DeliveryDate = order.DeliveryDate,
+            DeliveryCoordinates = order.DeliveryCoordinates
         };
     }
 

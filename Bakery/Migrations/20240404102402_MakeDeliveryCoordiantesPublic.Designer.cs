@@ -4,6 +4,7 @@ using Bakery.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bakery.Migrations
 {
     [DbContext(typeof(BakeryContext))]
-    partial class BakeryContextModelSnapshot : ModelSnapshot
+    [Migration("20240404102402_MakeDeliveryCoordiantesPublic")]
+    partial class MakeDeliveryCoordiantesPublic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,8 +132,8 @@ namespace Bakery.Migrations
                             BatchId = 1,
                             BakingGoodId = 1,
                             Delay = 20,
-                            TargetFinishTime = "04/04/2024 14.25.57",
-                            TargetStartTime = "04/04/2024 12.25.57",
+                            TargetFinishTime = "04/04/2024 14.24.02",
+                            TargetStartTime = "04/04/2024 12.24.02",
                             TotalQuantityOrdered = 10
                         },
                         new
@@ -138,8 +141,8 @@ namespace Bakery.Migrations
                             BatchId = 2,
                             BakingGoodId = 2,
                             Delay = 40,
-                            TargetFinishTime = "04/04/2024 14.25.57",
-                            TargetStartTime = "04/04/2024 13.25.57",
+                            TargetFinishTime = "04/04/2024 14.24.02",
+                            TargetStartTime = "04/04/2024 13.24.02",
                             TotalQuantityOrdered = 20
                         },
                         new
@@ -147,16 +150,16 @@ namespace Bakery.Migrations
                             BatchId = 3,
                             BakingGoodId = 3,
                             Delay = 50,
-                            TargetFinishTime = "04/04/2024 15.25.57",
-                            TargetStartTime = "04/04/2024 14.25.57",
+                            TargetFinishTime = "04/04/2024 15.24.02",
+                            TargetStartTime = "04/04/2024 14.24.02",
                             TotalQuantityOrdered = 30
                         },
                         new
                         {
                             BatchId = 4,
                             BakingGoodId = 3,
-                            TargetFinishTime = "04/04/2024 16.25.57",
-                            TargetStartTime = "04/04/2024 15.25.57",
+                            TargetFinishTime = "04/04/2024 16.24.02",
+                            TargetStartTime = "04/04/2024 15.24.02",
                             TotalQuantityOrdered = 40
                         });
                 });
@@ -320,21 +323,19 @@ namespace Bakery.Migrations
                         {
                             OrderId = 1,
                             DeliveryCoordinates = "56.1833, 10.2039",
-                            DeliveryDate = "04/04/2024 20.25.57",
+                            DeliveryDate = "04/04/2024 20.24.02",
                             DeliveryPlace = "Storcenter Nord, Aarhus N, Denmark"
                         },
                         new
                         {
                             OrderId = 2,
-                            DeliveryCoordinates = "49.1629, 34.2039",
-                            DeliveryDate = "04/04/2024 22.25.57",
+                            DeliveryDate = "04/04/2024 22.24.02",
                             DeliveryPlace = "Coop 365, Aarhus C, Denmark"
                         },
                         new
                         {
                             OrderId = 3,
-                            DeliveryCoordinates = "60.1833, 13.2039",
-                            DeliveryDate = "05/04/2024 00.25.57",
+                            DeliveryDate = "05/04/2024 00.24.02",
                             DeliveryPlace = "Hos Perto Hansen, Aarhus V, Denmark"
                         });
                 });

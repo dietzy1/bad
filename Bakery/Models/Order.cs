@@ -11,6 +11,6 @@ namespace Bakery.Models
         public virtual ICollection<OrderBakingGood> OrderBakingGoods { get; set; } = null!;
         public virtual ICollection<Packet> Packets { get; set; } = null!;
 
-        string DeliveryCoordinates { get; set; } = null!; //This was migrated in migration 3
+        public string? DeliveryCoordinates { get; set; } = null!; //This was migrated in migration 3
     }
 }

@@ -104,18 +104,21 @@ public class BakeryContext : DbContext
                 OrderId = 1,
                 DeliveryDate = DateTime.Now.AddHours(8).ToString(),
                 DeliveryPlace = "Storcenter Nord, Aarhus N, Denmark",
+                DeliveryCoordinates = "56.1833, 10.2039",
             },
             new Order
             {
                 OrderId = 2,
                 DeliveryDate = DateTime.Now.AddHours(10).ToString(),
                 DeliveryPlace = "Coop 365, Aarhus C, Denmark",
+                DeliveryCoordinates = "49.1629, 34.2039",
             },
             new Order
             {
                 OrderId = 3,
                 DeliveryDate = DateTime.Now.AddHours(12).ToString(),
                 DeliveryPlace = "Hos Perto Hansen, Aarhus V, Denmark",
+                DeliveryCoordinates = "60.1833, 13.2039",
             }
 
         );
