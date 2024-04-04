@@ -28,8 +28,12 @@ namespace Bakery.Controllers
             IList<IngredientDto> ingredientDtos = new List<IngredientDto>();
             foreach (var ingredient in ingredients)
             {
+                var allergens = await IngredientRepository.ListAllergensOfIngredient(ingredient.IngredientId);
+                ingredient.Allergens = allergens;
+                
                 var dto = IngredientDto.FromEntity(ingredient);
-                dto.Select(new string[] { "Name", "Stock" });
+                dto.Select(new string[] { "Name", "Stock", "Allergens" });
+
                 ingredientDtos.Add(dto);
             }
 
