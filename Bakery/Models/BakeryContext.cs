@@ -55,7 +55,7 @@ public class BakeryContext : DbContext
                 TotalQuantityOrdered = 20,
                 TargetStartTime = DateTime.Now.AddHours(1),
                 TargetFinishTime = DateTime.Now.AddHours(2),
-                Delay = null
+                Delay = 40
             },
             new Batch
             {
@@ -64,7 +64,7 @@ public class BakeryContext : DbContext
                 TotalQuantityOrdered = 30,
                 TargetStartTime = DateTime.Now.AddHours(2),
                 TargetFinishTime = DateTime.Now.AddHours(3),
-                Delay = null
+                Delay = 50
             },
             new Batch
             {
@@ -143,6 +143,8 @@ public class BakeryContext : DbContext
             }
         );
 
+
+
         modelBuilder.Entity<OrderBakingGood>().HasData(
             new OrderBakingGood
             {
@@ -165,6 +167,8 @@ public class BakeryContext : DbContext
                 Quantity = 30
             }
         );
+
+
 
         modelBuilder.Entity<BatchIngredient>().HasData(
             new BatchIngredient
@@ -228,7 +232,6 @@ public class BakeryContext : DbContext
                 IngredientAmount = 50
             }
         );
-
 
     }
 }
