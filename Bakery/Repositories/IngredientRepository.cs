@@ -15,6 +15,7 @@ public class IngredientRepository : Repository
     public async Task<Ingredient[]> ListIngredientsInBatch(int batchId)
     {
         return await Context.Ingredients
+            .Include(i => i.Allergens)
             .Where(i => i.BatchIngredients.Any(bi => bi.BatchId == batchId))
             .ToArrayAsync();
     }
