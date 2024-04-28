@@ -22,7 +22,28 @@ builder.Services.AddScoped<IngredientRepository>();
 
 var app = builder.Build();
 
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
+//var logger = app.Services.GetRequiredService<ILogger<Program>>();
+// Configure Serilog
+//FIXME: 
+var logger = new LoggerConfiguration()
+    .WriteTo.MongoDB(cfg =>
+    {
+        var mongoDbSettings = new MongoClientSettings
+        {
+            UseTls = true,
+            AllowInsecureTls = true,
+            Credential = MongoCredential.CreateCredential("databaseName", "username", "password"),
+            Server = new MongoServerAddress("127.0.0.1")
+        };
+
+        var mongoDbInstance = new MongoClient(mongoDbSettings).GetDatabase("serilog");
+        cfg.SetMongoDatabase(mongoDbInstance);
+        cfg.SetRollingInterval(RollingInterval.Month);
+    })
+    .CreateLogger();
+
+
+
 
 // Attempt to connect to the database and log the result
 using (var scope = app.Services.CreateScope())
