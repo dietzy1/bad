@@ -11,3 +11,8 @@ services:
         
       ports:
         - 1433:1433
+    mongodb:
+      image: mongo:latest
+      container_name: MongoDB
+      ports:
+      - 27017:27017
