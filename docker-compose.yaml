@@ -13,6 +13,9 @@ services:
         - 1433:1433
     mongodb:
       image: mongo:latest
-      container_name: MongoDB
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
       ports:
-      - 27017:27017
+        - 27017:27017

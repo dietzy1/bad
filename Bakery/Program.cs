@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Serilog;
+using Serilog.Sinks.MongoDB;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,8 @@ builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<BakingGoodRepository>();
 builder.Services.AddScoped<BatchRepository>();
 builder.Services.AddScoped<IngredientRepository>();
+
+builder.Logging.AddSerilog();
 
 builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     {
@@ -49,30 +53,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 
+builder.Host.UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration));
+
 var app = builder.Build();
 
-//var logger = app.Services.GetRequiredService<ILogger<Program>>();
-// Configure Serilog
-//FIXME: 
-var logger = new LoggerConfiguration()
-    .WriteTo.MongoDB(cfg =>
-    {
-        var mongoDbSettings = new MongoClientSettings
-        {
-            UseTls = true,
-            AllowInsecureTls = true,
-            Credential = MongoCredential.CreateCredential("databaseName", "username", "password"),
-            Server = new MongoServerAddress("127.0.0.1")
-        };
-
-        var mongoDbInstance = new MongoClient(mongoDbSettings).GetDatabase("serilog");
-        cfg.SetMongoDatabase(mongoDbInstance);
-        cfg.SetRollingInterval(RollingInterval.Month);
-    })
-    .CreateLogger();
 
 
-
+var log = app.Services.GetRequiredService<ILogger<Program>>();
 
 // Attempt to connect to the database and log the result
 using (var scope = app.Services.CreateScope())
@@ -89,7 +76,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "An error occurred while connecting or migrating the database.");
+        log.LogError(ex, "An error occurred while connecting or migrating the database.");
     }
 }
 
