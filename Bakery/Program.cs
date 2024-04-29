@@ -1,9 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Bakery.Models;
 using Bakery.Repositories;
+<<<<<<< HEAD
 using Serilog;
 using Serilog.Sinks.MongoDB;
 
+=======
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+>>>>>>> 69c96e00320f1a9bacdc6f0e99838b53adee8337
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +27,13 @@ builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<BakingGoodRepository>();
 builder.Services.AddScoped<BatchRepository>();
 builder.Services.AddScoped<IngredientRepository>();
+
+builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
+    {
+        options.Password.RequiredLength = 4;
+    }
+    )
+    .AddEntityFrameworkStores<BakeryContext>();
 
 var app = builder.Build();
 
