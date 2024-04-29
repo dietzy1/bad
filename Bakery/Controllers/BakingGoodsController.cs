@@ -11,9 +11,11 @@ namespace Bakery.Controllers
     public class BakingGoodsController : ControllerBase
     {
         private readonly BakingGoodRepository BakingGoodRepository;
+
         public BakingGoodsController(BakingGoodRepository bakingGoodRepository)
         {
             BakingGoodRepository = bakingGoodRepository;
+
         }
 
         [HttpGet]

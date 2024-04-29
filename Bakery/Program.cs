@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Sinks.MongoDB;
 using Bakery.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +16,8 @@ builder.Services.AddDbContext<BakeryContext>(options =>
 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,7 +54,25 @@ builder.Services.AddScoped<BakingGoodRepository>();
 builder.Services.AddScoped<BatchRepository>();
 builder.Services.AddScoped<IngredientRepository>();
 
-builder.Logging.AddSerilog();
+//What the actual fuck is this? 🤯
+builder.Services.AddScoped<LogRepository>(provider =>
+        {
+            var connectionString = builder.Configuration.GetConnectionString("MongoDb");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("MongoDb connection string is not configured.");
+            }
+            return new LogRepository(connectionString);
+
+        });
+
+
+
+//Ship logs to mongoDB by using magic configuration files :)
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(context.Configuration);
+});
 
 builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     {

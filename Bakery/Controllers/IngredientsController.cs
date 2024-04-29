@@ -11,9 +11,12 @@ namespace Bakery.Controllers
     public class IngredientsController : ControllerBase
     {
         private readonly IngredientRepository IngredientRepository;
-        public IngredientsController(IngredientRepository ingredientRepository)
+
+        private readonly ILogger<IngredientsController> Logger;
+        public IngredientsController(IngredientRepository ingredientRepository, ILogger<IngredientsController> logger)
         {
             IngredientRepository = ingredientRepository;
+            Logger = logger;
         }
 
 
