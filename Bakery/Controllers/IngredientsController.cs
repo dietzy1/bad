@@ -1,6 +1,7 @@
 ﻿using Bakery.Dtos;
 using Bakery.Models;
 using Bakery.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
@@ -15,11 +16,12 @@ namespace Bakery.Controllers
             IngredientRepository = ingredientRepository;
         }
 
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredients([FromQuery] string select)
         {
             var ingredients = await IngredientRepository.ListIngredients();
-            
+
             IList<IngredientDto> ingredientDtos = new List<IngredientDto>();
             foreach (var ingredient in ingredients)
             {

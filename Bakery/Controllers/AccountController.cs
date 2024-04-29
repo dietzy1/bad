@@ -30,6 +30,7 @@ public class AccountController : ControllerBase
         _signInManager = signInManager;
     }
 
+    //[HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto input)
     {
         if (!ModelState.IsValid)
@@ -54,6 +55,7 @@ public class AccountController : ControllerBase
         }
     }
 
+    [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto input)
     {
 
@@ -75,6 +77,8 @@ public class AccountController : ControllerBase
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])),
                 SecurityAlgorithms.HmacSha256
             );
+
+            return BadRequest("Testing");
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName)
@@ -93,7 +97,7 @@ public class AccountController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e.Message);
-            return StatusCode(500, "Internal server error");
+            return StatusCode(500, e.Message);
         }
     }
 

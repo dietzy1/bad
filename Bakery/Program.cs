@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Sinks.MongoDB;
+using Bakery.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,8 @@ builder.Logging.AddSerilog();
 builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     {
         options.Password.RequiredLength = 4;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
     }
     )
     .AddEntityFrameworkStores<BakeryContext>();
@@ -77,13 +80,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin"));
+});
 
 
-builder.Host.UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration));
+//builder.Host.UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration));
 
 var app = builder.Build();
-
-
 
 var log = app.Services.GetRequiredService<ILogger<Program>>();
 
@@ -117,4 +122,16 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApiUser>>();
+    if (userManager == null)
+    {
+        throw new Exception("UserManager is null");
+    }
+    SeedAuthorization.SeedAdmin(userManager);
+    SeedAuthorization.SeedManager(userManager);
+
+}
+
 app.Run();
