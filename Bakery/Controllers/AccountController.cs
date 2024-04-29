@@ -39,6 +39,12 @@ namespace Bakery.Controllers
                 return BadRequest(ModelState);
             }
 
+            //Early return if no user or password
+            if (input.Username == null || input.Password == null)
+            {
+                return BadRequest("Username or password missing");
+            }
+
             var newUser = new ApiUser
             {
                 UserName = input.Username
@@ -59,6 +65,10 @@ namespace Bakery.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto input)
         {
+            if (input.Username == null || input.Password == null)
+            {
+                return BadRequest("Username or password missing");
+            }
 
             try
             {
@@ -75,15 +85,16 @@ namespace Bakery.Controllers
                 }
 
                 var signInCrendentials = new SigningCredentials(
-                    new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"])),
+                    new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"] ?? throw new Exception("JWT:SigningKey not found"))),
                     SecurityAlgorithms.HmacSha256
                 );
 
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName)
+                {
+                    new Claim(ClaimTypes.Name, user.UserName)
 
-            };
+
+                };
 
                 claims.AddRange((await _userManager.GetClaimsAsync(user)).Select(c => new Claim(c.Type, c.Value)));
 

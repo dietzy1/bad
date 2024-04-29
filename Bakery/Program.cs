@@ -102,15 +102,12 @@ builder.Services.AddAuthentication(options =>
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["JWT:Issuer"],
             ValidAudience = builder.Configuration["JWT:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"] ?? throw new Exception("JWT:SigningKey not found")))
         };
     });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin", "true"));
-
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin", "true"));
 
 
 //builder.Host.UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration));
@@ -151,14 +148,9 @@ app.UseAuthentication();
 app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApiUser>>();
-    if (userManager == null)
-    {
-        throw new Exception("UserManager is null");
-    }
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApiUser>>() ?? throw new Exception("UserManager is null");
     SeedAuthorization.SeedAdmin(userManager);
     SeedAuthorization.SeedManager(userManager);
-
 }
 
 app.Run();

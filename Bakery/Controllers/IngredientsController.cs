@@ -56,7 +56,10 @@ namespace Bakery.Controllers
             {
                 return BadRequest("Quantity cannot be negative");
             }
-            Logger.LogInformation("User {UserName} accessed {HttpMethod} endpoint {Endpoint} at {Timestamp}.", User.Identity.Name, HttpContext.Request.Method, HttpContext.Request.Path, DateTime.UtcNow);
+
+            var loginfo = new { UserName = User.Identity.Name, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
+
+            Logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
 
 
 
