@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Bakery.Models;
 using Bakery.Repositories;
+using Serilog;
+using Serilog.Sinks.MongoDB;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,13 +56,10 @@ using (var scope = app.Services.CreateScope())
     {
         if (dbContext.Database.CanConnect())
         {
-            logger.LogInformation("Successfully connected to the database! Migrating...");
+
             dbContext.Database.Migrate();
         }
-        else
-        {
-            logger.LogWarning("Could not connect to the database.");
-        }
+
     }
     catch (Exception ex)
     {
