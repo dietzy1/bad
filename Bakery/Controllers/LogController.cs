@@ -20,3 +20,11 @@ namespace Bakery.Controllers
            } */
     }
 }
+
+
+
+//We need to add this somewhere idk DTO? Models to filter out shit
+public class LogEntry
+{
+
+}
