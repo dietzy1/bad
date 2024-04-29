@@ -10,11 +10,10 @@ namespace Bakery.Controllers
     {
         private readonly BakingGoodRepository BakingGoodRepository;
 
-        private readonly ILogger<BakingGoodsController> Logger;
-        public BakingGoodsController(BakingGoodRepository bakingGoodRepository, ILogger<BakingGoodsController> logger)
+        public BakingGoodsController(BakingGoodRepository bakingGoodRepository)
         {
             BakingGoodRepository = bakingGoodRepository;
-            Logger = logger;
+
         }
 
         [HttpGet]

@@ -11,13 +11,13 @@ namespace Bakery.Controllers
     {
         private readonly OrderRepository OrderRepository;
         private readonly BakingGoodRepository BakingGoodRepository;
-        private readonly ILogger<OrdersController> Logger;
 
-        public OrdersController(OrderRepository orderRepository, BakingGoodRepository bakingGoodRepository, ILogger<OrdersController> logger)
+
+        public OrdersController(OrderRepository orderRepository, BakingGoodRepository bakingGoodRepository)
         {
             OrderRepository = orderRepository;
             BakingGoodRepository = bakingGoodRepository;
-            Logger = logger;
+
         }
 
         [HttpGet("{id}")]

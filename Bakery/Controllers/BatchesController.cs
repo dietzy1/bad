@@ -11,13 +11,10 @@ namespace Bakery.Controllers
         private readonly BatchRepository BatchRepository;
         private readonly IngredientRepository IngredientRepository;
 
-        private readonly ILogger<BatchesController> Logger;
-
-        public BatchesController(BatchRepository batchRepository, IngredientRepository ingredientRepository, ILogger<BatchesController> logger)
+        public BatchesController(BatchRepository batchRepository, IngredientRepository ingredientRepository)
         {
             BatchRepository = batchRepository;
             IngredientRepository = ingredientRepository;
-            Logger = logger;
         }
 
         [HttpGet("{id}/Ingredients")]

@@ -15,6 +15,8 @@ builder.Services.AddDbContext<BakeryContext>(options =>
 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -50,6 +52,20 @@ builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<BakingGoodRepository>();
 builder.Services.AddScoped<BatchRepository>();
 builder.Services.AddScoped<IngredientRepository>();
+
+//What the actual fuck is this? 🤯
+builder.Services.AddScoped<LogRepository>(provider =>
+        {
+            var connectionString = builder.Configuration.GetConnectionString("MongoDb");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("MongoDb connection string is not configured.");
+            }
+            return new LogRepository(connectionString);
+
+        });
+
+
 
 //Ship logs to mongoDB by using magic configuration files :)
 builder.Host.UseSerilog((context, config) =>
