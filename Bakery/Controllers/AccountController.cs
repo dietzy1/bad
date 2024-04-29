@@ -5,7 +5,7 @@ using Bakery.Models;
 using Serilog;
 using Bakery.Dtos;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -74,15 +74,19 @@ public class AccountController : ControllerBase
             }
 
             var signInCrendentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])),
+                new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"])),
                 SecurityAlgorithms.HmacSha256
             );
 
-            return BadRequest("Testing");
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName)
+
             };
+
+            claims.AddRange((await _userManager.GetClaimsAsync(user)).Select(c => new Claim(c.Type, c.Value)));
+
+
             var JwtToken = new JwtSecurityToken(
                 _configuration["JWT:Issuer"],
                 _configuration["JWT:Audience"],

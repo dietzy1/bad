@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
 {
-    [Authorize(Policy = "Admin")]
     [Route("v1/[controller]")]
     [ApiController]
     public class BakingGoodsController : ControllerBase
@@ -18,6 +17,7 @@ namespace Bakery.Controllers
 
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BakingGoodDto>>> GetBakingGoods(string? select)
         {
