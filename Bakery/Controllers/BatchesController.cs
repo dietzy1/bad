@@ -25,6 +25,7 @@ namespace Bakery.Controllers
 
             // Get ingredients of batch and transform it into a DTO
             var ingredients = await IngredientRepository.ListIngredientsInBatch(id);
+
             IList<IngredientDto> ingredientDtos = new List<IngredientDto>();
             foreach (var ingredient in ingredients)
             {

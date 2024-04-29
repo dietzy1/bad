@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Bakery.Models;
 
-public class BakeryContext : DbContext
+public class BakeryContext : IdentityDbContext<ApiUser>
 {
     public BakeryContext(DbContextOptions<BakeryContext> options)
         : base(options)
@@ -25,6 +26,9 @@ public class BakeryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // This is needed to make the identity work for some reason :)
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<OrderBakingGood>().ToTable("OrderBakingGood").HasKey(e => new { e.OrderId, e.BakingGoodId });
 
         modelBuilder.Entity<BatchIngredient>().ToTable("BatchIngredient").HasKey(e => new { e.BatchId, e.IngredientId });
