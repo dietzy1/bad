@@ -1,16 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Bakery.Models;
 using Bakery.Repositories;
-<<<<<<< HEAD
-using Serilog;
-using Serilog.Sinks.MongoDB;
-
-=======
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
->>>>>>> 69c96e00320f1a9bacdc6f0e99838b53adee8337
 
 var builder = WebApplication.CreateBuilder(args);
 
