@@ -11,11 +11,13 @@ namespace Bakery.Controllers
     {
         private readonly OrderRepository OrderRepository;
         private readonly BakingGoodRepository BakingGoodRepository;
+        private readonly ILogger<OrdersController> Logger;
 
-        public OrdersController(OrderRepository orderRepository, BakingGoodRepository bakingGoodRepository)
+        public OrdersController(OrderRepository orderRepository, BakingGoodRepository bakingGoodRepository, ILogger<OrdersController> logger)
         {
             OrderRepository = orderRepository;
             BakingGoodRepository = bakingGoodRepository;
+            Logger = logger;
         }
 
         [HttpGet("{id}")]
@@ -26,7 +28,7 @@ namespace Bakery.Controllers
 
             OrderDto orderDto = OrderDto.FromEntity(selectedOrder);
             if (select != null) orderDto.Select(select.Split(','));
-           
+
             return Ok(orderDto);
         }
 
@@ -38,8 +40,8 @@ namespace Bakery.Controllers
 
             // Gets list of baking goods for an order in a dictionary with the quantity ordered as well
             var bakingGoods = await OrderRepository.ListBakingGoodsForOrderWithQuantities(id);
-            
-            
+
+
             return Ok(bakingGoods);
         }
 
@@ -49,18 +51,18 @@ namespace Bakery.Controllers
             // Make sure order exists
             var selectedOrder = await OrderRepository.GetOrderById(id);
             if (selectedOrder == null) return NotFound("Order not found");
-            
-            
+
+
             // Get packets of order and transform it into a DTO
             Packet[] packets = await OrderRepository.ListPacketForOrder(id);
             IList<PacketDto> packetDtos = new List<PacketDto>();
-            
+
             foreach (var packet in packets)
             {
                 packetDtos.Add(PacketDto.FromEntity(packet));
             }
-            
-            return Ok(new {deliveryPlace = selectedOrder.DeliveryPlace, deliveryCoordinates = selectedOrder.DeliveryCoordinates, packets = packetDtos});
+
+            return Ok(new { deliveryPlace = selectedOrder.DeliveryPlace, deliveryCoordinates = selectedOrder.DeliveryCoordinates, packets = packetDtos });
         }
     }
 }

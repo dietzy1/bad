@@ -10,16 +10,19 @@ namespace Bakery.Controllers
     public class IngredientsController : ControllerBase
     {
         private readonly IngredientRepository IngredientRepository;
-        public IngredientsController(IngredientRepository ingredientRepository)
+
+        private readonly ILogger<IngredientsController> Logger;
+        public IngredientsController(IngredientRepository ingredientRepository, ILogger<IngredientsController> logger)
         {
             IngredientRepository = ingredientRepository;
+            Logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredients([FromQuery] string select)
         {
             var ingredients = await IngredientRepository.ListIngredients();
-            
+
             IList<IngredientDto> ingredientDtos = new List<IngredientDto>();
             foreach (var ingredient in ingredients)
             {

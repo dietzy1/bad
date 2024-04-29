@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Sinks.MongoDB;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +51,11 @@ builder.Services.AddScoped<BakingGoodRepository>();
 builder.Services.AddScoped<BatchRepository>();
 builder.Services.AddScoped<IngredientRepository>();
 
-builder.Logging.AddSerilog();
+//Ship logs to mongoDB by using magic configuration files :)
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(context.Configuration);
+});
 
 builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     {
@@ -79,11 +82,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 
-builder.Host.UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration));
 
 var app = builder.Build();
-
-
 
 var log = app.Services.GetRequiredService<ILogger<Program>>();
 
