@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Bakery.Models;
 using Bakery.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

@@ -47,6 +47,7 @@ namespace Bakery.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateIngredient([FromBody] CreateIngredientDto ingredientDto)
         {
+
             if (ingredientDto == null)
             {
                 return BadRequest("Ingredient data is missing from request body");
@@ -55,6 +56,9 @@ namespace Bakery.Controllers
             {
                 return BadRequest("Quantity cannot be negative");
             }
+            Logger.LogInformation("User {UserName} accessed {HttpMethod} endpoint {Endpoint} at {Timestamp}.", User.Identity.Name, HttpContext.Request.Method, HttpContext.Request.Path, DateTime.UtcNow);
+
+
 
             // Create new ingredient from dto data and save it to the database
             Ingredient ingredient = new Ingredient

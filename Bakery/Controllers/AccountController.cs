@@ -1,108 +1,109 @@
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Bakery.Models;
-using Serilog;
 using Bakery.Dtos;
 using Microsoft.IdentityModel.Tokens;
-
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 
-public class AccountController : ControllerBase
+namespace Bakery.Controllers
 {
-    private readonly BakeryContext _context;
-
-    private readonly ILogger<AccountController> _logger;
-    private readonly IConfiguration _configuration;
-    private readonly UserManager<ApiUser> _userManager;
-    private readonly SignInManager<ApiUser> _signInManager;
-    public AccountController
-   (
-    BakeryContext context, ILogger<AccountController> logger, IConfiguration configuration,
-    UserManager<ApiUser> userManager, SignInManager<ApiUser> signInManager
-   )
+    [Route("v1/[controller]")]
+    [ApiController]
+    public class AccountController : ControllerBase
     {
-        _context = context;
-        _logger = logger;
-        _configuration = configuration;
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
+        private readonly BakeryContext _context;
 
-    //[HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterDto input)
-    {
-        if (!ModelState.IsValid)
+        private readonly ILogger<AccountController> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<ApiUser> _userManager;
+        private readonly SignInManager<ApiUser> _signInManager;
+        public AccountController
+       (
+        BakeryContext context, ILogger<AccountController> logger, IConfiguration configuration,
+        UserManager<ApiUser> userManager, SignInManager<ApiUser> signInManager
+       )
         {
-            return BadRequest(ModelState);
+            _context = context;
+            _logger = logger;
+            _configuration = configuration;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        var newUser = new ApiUser
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDto input)
         {
-            UserName = input.Username
-        };
-
-        var result = await _userManager.CreateAsync(newUser, input.Password);
-        if (result.Succeeded)
-        {
-            _logger.LogInformation($"User {newUser.UserName} created a new account");
-            return StatusCode(201, $"User {newUser.UserName} created");
-        }
-        else
-        {
-            return BadRequest(result.Errors);
-        }
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginDto input)
-    {
-
-        try
-        {
-            var user = await _userManager.FindByNameAsync(input.Username);
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("User not found");
+                return BadRequest(ModelState);
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, input.Password, false);
-            if (!result.Succeeded)
+            var newUser = new ApiUser
             {
-                return BadRequest("Invalid password");
+                UserName = input.Username
+            };
+
+            var result = await _userManager.CreateAsync(newUser, input.Password);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation($"User {newUser.UserName} created a new account");
+                return StatusCode(201, $"User {newUser.UserName} created");
             }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+        }
 
-            var signInCrendentials = new SigningCredentials(
-                new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"])),
-                SecurityAlgorithms.HmacSha256
-            );
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto input)
+        {
 
-            var claims = new List<Claim>
+            try
+            {
+                var user = await _userManager.FindByNameAsync(input.Username);
+                if (user == null)
+                {
+                    return BadRequest("User not found");
+                }
+
+                var result = await _signInManager.CheckPasswordSignInAsync(user, input.Password, false);
+                if (!result.Succeeded)
+                {
+                    return BadRequest("Invalid password");
+                }
+
+                var signInCrendentials = new SigningCredentials(
+                    new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"])),
+                    SecurityAlgorithms.HmacSha256
+                );
+
+                var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName)
 
             };
 
-            claims.AddRange((await _userManager.GetClaimsAsync(user)).Select(c => new Claim(c.Type, c.Value)));
+                claims.AddRange((await _userManager.GetClaimsAsync(user)).Select(c => new Claim(c.Type, c.Value)));
 
 
-            var JwtToken = new JwtSecurityToken(
-                _configuration["JWT:Issuer"],
-                _configuration["JWT:Audience"],
-                claims,
-                expires: DateTime.Now.AddSeconds(300),
-                signingCredentials: signInCrendentials
-            );
-            var JwtString = new JwtSecurityTokenHandler().WriteToken(JwtToken);
+                var JwtToken = new JwtSecurityToken(
+                    _configuration["JWT:Issuer"],
+                    _configuration["JWT:Audience"],
+                    claims,
+                    expires: DateTime.Now.AddSeconds(300),
+                    signingCredentials: signInCrendentials
+                );
+                var JwtString = new JwtSecurityTokenHandler().WriteToken(JwtToken);
 
-            return StatusCode(StatusCodes.Status200OK, JwtString);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.Message);
-            return StatusCode(500, e.Message);
+                return StatusCode(StatusCodes.Status200OK, JwtString);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return StatusCode(500, e.Message);
+            }
         }
     }
-
 }

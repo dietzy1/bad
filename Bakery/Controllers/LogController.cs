@@ -16,7 +16,7 @@ namespace Bakery.Controllers
         }
 
         //Rune Add some of the authorization shit here
-        [HttpGet("logs")]
+        [HttpGet]
         public async Task<ActionResult> GetLogs()
         {
             LogRepository.Tester();
