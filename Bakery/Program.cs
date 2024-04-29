@@ -8,6 +8,8 @@ using Serilog.Sinks.MongoDB;
 =======
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 >>>>>>> 69c96e00320f1a9bacdc6f0e99838b53adee8337
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +36,24 @@ builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     }
     )
     .AddEntityFrameworkStores<BakeryContext>();
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
+        };
+    });
+
+
 
 var app = builder.Build();
 
@@ -85,6 +105,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 app.Run();
