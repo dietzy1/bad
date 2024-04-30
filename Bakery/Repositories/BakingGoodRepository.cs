@@ -1,7 +1,7 @@
 namespace Bakery.Repositories;
 
 using Microsoft.EntityFrameworkCore;
-using Bakery.Models;
+using Models;
 
 public class BakingGoodRepository : Repository
 {

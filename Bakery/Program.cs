@@ -9,6 +9,7 @@ using Serilog;
 using Bakery.Seed;
 using Amazon.Auth.AccessControlPolicy;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
