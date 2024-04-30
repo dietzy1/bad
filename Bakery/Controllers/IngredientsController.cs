@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
 {
+
     [Route("v1/[controller]")]
     [ApiController]
     public class IngredientsController : ControllerBase
@@ -43,7 +44,7 @@ namespace Bakery.Controllers
             }
             return Ok(ingredientDtos);
         }
-
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateIngredient([FromBody] CreateIngredientDto ingredientDto)
         {
@@ -72,7 +73,7 @@ namespace Bakery.Controllers
             await IngredientRepository.CreateIngredient(ingredient);
             return Ok(IngredientDto.FromEntity(ingredient));
         }
-
+        [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateIngredient(int id, [FromBody] UpdateIngredientDto ingredientDto)
         {
@@ -92,7 +93,7 @@ namespace Bakery.Controllers
 
             return Ok(IngredientDto.FromEntity(ingredient));
         }
-
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIngredient(int id)
         {

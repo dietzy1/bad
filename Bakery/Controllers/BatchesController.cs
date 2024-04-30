@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
 {
-    [Authorize(Policy = "Baker")]
+
     [Route("v1/[controller]")]
     [ApiController]
     public class BatchesController : ControllerBase
@@ -19,7 +19,7 @@ namespace Bakery.Controllers
             IngredientRepository = ingredientRepository;
         }
 
-
+        [Authorize(Policy = "Baker")]
         [HttpGet("{id}/Ingredients")]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredientsOfBatch(int id)
         {
@@ -40,7 +40,7 @@ namespace Bakery.Controllers
 
             return Ok(ingredientDtos);
         }
-
+        [Authorize(Policy = "Baker")]
         [HttpGet("AverageDelay")]
         public async Task<IActionResult> GetAverageDelay()
         {

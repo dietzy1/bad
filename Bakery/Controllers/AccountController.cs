@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Bakery.Controllers
 {
-    [Authorize("Admin")]
+    [Authorize(Policy = "Admin")]
     [Route("v1/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase

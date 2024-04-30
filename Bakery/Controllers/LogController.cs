@@ -1,9 +1,11 @@
 using Bakery.Dtos;
 using Bakery.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
 {
+    [Authorize(Policy = "Admin")]
     [Route("v1/[controller]")]
     [ApiController]
     public class LogController(LogRepository logRepository) : ControllerBase

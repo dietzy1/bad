@@ -32,7 +32,7 @@ namespace Bakery.Controllers
 
             return Ok(orderDto);
         }
-
+        [Authorize(Policy = "Manager")]
         [HttpGet("{id}/BakingGoods")]
         public async Task<IActionResult> GetBakingGoodsOfOrderWithQuantities(int id)
         {
