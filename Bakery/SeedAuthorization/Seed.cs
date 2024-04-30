@@ -17,7 +17,7 @@ public static class SeedAuthorization
             var user = new ApiUser
             {
                 UserName = adminUsername,
-                FullName = "Jesus Krist the admin"
+                FullName = "Jesus Christ the admin"
             };
 
             var result = userManager.CreateAsync(user, adminPassword).Result;
@@ -79,7 +79,6 @@ public static class SeedAuthorization
 
             foreach (var claim in claims)
             {
-<<<<<<< HEAD
                 var claimResult = userManager.AddClaimAsync(managerUser, claim).Result;
 
                 if (!claimResult.Succeeded)
@@ -168,9 +167,7 @@ public static class SeedAuthorization
                 {
                     throw new System.Exception("Failed to seed driver claim");
                 }
-=======
                 throw new Exception("Failed to seed manager claim");
->>>>>>> de23f7d5d8c6898b2db053c2f2e02f3c81aa2387
             }
         }
     }
