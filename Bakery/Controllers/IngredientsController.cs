@@ -48,6 +48,8 @@ namespace Bakery.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateIngredient([FromBody] CreateIngredientDto ingredientDto)
         {
+            var loginfo = new { UserName = User.Identity?.Name, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
+            Logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
 
             if (ingredientDto == null)
             {
@@ -57,12 +59,6 @@ namespace Bakery.Controllers
             {
                 return BadRequest("Quantity cannot be negative");
             }
-
-            var loginfo = new { UserName = User.Identity.Name, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
-
-            Logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
-
-
 
             // Create new ingredient from dto data and save it to the database
             Ingredient ingredient = new Ingredient
@@ -77,6 +73,9 @@ namespace Bakery.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateIngredient(int id, [FromBody] UpdateIngredientDto ingredientDto)
         {
+            var loginfo = new { UserName = User.Identity?.Name, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
+            Logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
+
             if (ingredientDto == null) return BadRequest("Ingredient data missing from request body");
             if (ingredientDto.Quantity < 0) return BadRequest("Quantity cannot be negative");
 
@@ -97,6 +96,8 @@ namespace Bakery.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIngredient(int id)
         {
+            var loginfo = new { UserName = User.Identity?.Name, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
+            Logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
             // Make sure ingredient exists
             Ingredient? ingredient = await IngredientRepository.GetIngredientById(id);
             if (ingredient == null) return NotFound("Ingredient not found");
