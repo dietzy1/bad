@@ -115,14 +115,14 @@ namespace Bakery.Controllers
                     _configuration["JWT:Issuer"],
                     _configuration["JWT:Audience"],
                     claims,
-                    expires: DateTime.Now.AddSeconds(300),
+                    expires: DateTime.MaxValue,
                     signingCredentials: signInCrendentials
                 );
                 var JwtString = new JwtSecurityTokenHandler().WriteToken(JwtToken);
 
                 _logger.LogInformation($"User {user.UserName} logged in");
 
-                return StatusCode(StatusCodes.Status200OK, JwtString);
+                return StatusCode(StatusCodes.Status200OK, new { Token = JwtString });
             }
             catch (Exception e)
             {

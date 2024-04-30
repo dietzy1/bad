@@ -1,6 +1,17 @@
 version: "1.0"
  
 services:
+    api:
+      image: bakeryapi
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: BakeryAPI
+      ports:
+        - 5051:5051
+      depends_on:
+        - db
+        - mongodb
     db:
       image: mcr.microsoft.com/mssql/server:2019-latest
       container_name: BakeryDB

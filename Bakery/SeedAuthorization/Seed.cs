@@ -167,7 +167,6 @@ public static class SeedAuthorization
                 {
                     throw new System.Exception("Failed to seed driver claim");
                 }
-                throw new Exception("Failed to seed manager claim");
             }
         }
     }

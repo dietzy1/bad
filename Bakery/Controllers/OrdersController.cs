@@ -32,7 +32,8 @@ namespace Bakery.Controllers
 
             return Ok(orderDto);
         }
-        [Authorize(Policy = "Manager")]
+
+        [Authorize(Policy = "Driver")]
         [HttpGet("{id}/BakingGoods")]
         public async Task<IActionResult> GetBakingGoodsOfOrderWithQuantities(int id)
         {
