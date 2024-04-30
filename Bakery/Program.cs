@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Bakery.Seed;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

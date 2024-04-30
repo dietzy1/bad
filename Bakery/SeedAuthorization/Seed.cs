@@ -1,9 +1,8 @@
-
-
 namespace Bakery.Seed;
 
+
 using System.Security.Claims;
-using Bakery.Models;
+using Models;
 using Microsoft.AspNetCore.Identity;
 
 public static class SeedAuthorization
@@ -25,7 +24,7 @@ public static class SeedAuthorization
 
             if (!result.Succeeded)
             {
-                throw new System.Exception("Failed to seed admin user");
+                throw new Exception("Failed to seed admin user");
             }
 
             var adminUser = userManager.FindByNameAsync(adminUsername).Result;
@@ -35,7 +34,7 @@ public static class SeedAuthorization
 
             if (!claimResult.Succeeded)
             {
-                throw new System.Exception("Failed to seed admin claim");
+                throw new Exception("Failed to seed admin claim");
             }
         }
 
@@ -57,7 +56,7 @@ public static class SeedAuthorization
 
             if (!result.Succeeded)
             {
-                throw new System.Exception("Failed to seed manager user");
+                throw new Exception("Failed to seed manager user");
             }
 
             var managerUser = userManager.FindByNameAsync(managerUsername).Result;
@@ -67,7 +66,7 @@ public static class SeedAuthorization
 
             if (!claimResult.Succeeded)
             {
-                throw new System.Exception("Failed to seed manager claim");
+                throw new Exception("Failed to seed manager claim");
             }
         }
     }

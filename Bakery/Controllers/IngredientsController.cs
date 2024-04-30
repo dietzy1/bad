@@ -1,7 +1,6 @@
 ﻿using Bakery.Dtos;
 using Bakery.Models;
 using Bakery.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
