@@ -19,7 +19,7 @@ namespace Bakery.Controllers
             Logger = logger;
         }
 
-
+        [Authorize(Policy = "Baker")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredients([FromQuery] string select)
         {

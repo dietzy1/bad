@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Bakery.Seed;
+using Amazon.Auth.AccessControlPolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,7 +108,11 @@ builder.Services.AddAuthentication(options =>
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin", "true"));
+    .AddPolicy("Admin", policy => policy.RequireClaim("Rank", "4"))
+    .AddPolicy("Manager", policy => policy.RequireClaim("Rank", "4", "3"))
+    .AddPolicy("Baker", policy => policy.RequireClaim("Rank", "4", "3", "2"))
+    .AddPolicy("Driver", Policy => Policy.RequireClaim("Rank", "4", "3", "1"));
+
 
 
 //builder.Host.UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration));
@@ -152,6 +157,8 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApiUser>>() ?? throw new Exception("UserManager is null");
     SeedAuthorization.SeedAdmin(userManager);
     SeedAuthorization.SeedManager(userManager);
+    SeedAuthorization.SeedBaker(userManager);
+    SeedAuthorization.SeedDriver(userManager);
 }
 
 app.Run();

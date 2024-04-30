@@ -5,9 +5,11 @@ using Bakery.Dtos;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bakery.Controllers
 {
+    [Authorize("Admin")]
     [Route("v1/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -31,6 +33,7 @@ namespace Bakery.Controllers
             _signInManager = signInManager;
         }
 
+
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto input)
         {
@@ -51,17 +54,28 @@ namespace Bakery.Controllers
             };
 
             var result = await _userManager.CreateAsync(newUser, input.Password);
-            if (result.Succeeded)
-            {
-                _logger.LogInformation($"User {newUser.UserName} created a new account");
-                return StatusCode(201, $"User {newUser.UserName} created");
-            }
-            else
+
+            if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
             }
-        }
 
+            _logger.LogInformation($"User {newUser.UserName} created a new account");
+
+
+            Claim claim = new Claim("Rank", input.Rank);
+
+            var claimResult = _userManager.AddClaimAsync(newUser, claim).Result;
+
+            if (!claimResult.Succeeded)
+            {
+                throw new System.Exception("Failed to seed admin claim");
+            }
+
+
+            return StatusCode(201, $"User {newUser.UserName} created");
+        }
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto input)
         {
@@ -92,8 +106,6 @@ namespace Bakery.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName)
-
-
                 };
 
                 claims.AddRange((await _userManager.GetClaimsAsync(user)).Select(c => new Claim(c.Type, c.Value)));
@@ -107,6 +119,8 @@ namespace Bakery.Controllers
                     signingCredentials: signInCrendentials
                 );
                 var JwtString = new JwtSecurityTokenHandler().WriteToken(JwtToken);
+
+                _logger.LogInformation($"User {user.UserName} logged in");
 
                 return StatusCode(StatusCodes.Status200OK, JwtString);
             }

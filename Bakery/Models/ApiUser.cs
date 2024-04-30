@@ -7,7 +7,7 @@ namespace Bakery.Models;
 
 public class ApiUser : IdentityUser
 {
-    [MaxLength(28)]
+    [MaxLength(100)]
     public string? FullName { get; set; }
 
 }

@@ -12,4 +12,6 @@ public class RegisterDto
 
     [Required]
     public string? Password { get; set; }
+    [Required]
+    public string? Rank { get; set; }
 }

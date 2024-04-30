@@ -18,10 +18,10 @@ public static class SeedAuthorization
             var user = new ApiUser
             {
                 UserName = adminUsername,
-                FullName = "Admin User"
+                FullName = "Jesus Krist the admin"
             };
 
-            IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
+            var result = userManager.CreateAsync(user, adminPassword).Result;
 
             if (!result.Succeeded)
             {
@@ -29,16 +29,25 @@ public static class SeedAuthorization
             }
 
             var adminUser = userManager.FindByNameAsync(adminUsername).Result;
-            var claim = new Claim("IsAdmin", "true");
 
-            var claimResult = userManager.AddClaimAsync(adminUser, claim).Result;
 
-            if (!claimResult.Succeeded)
+            List<Claim> claims =
+            [
+                new Claim("IsAdmin", "true"),
+                new Claim("Rank", "4")
+            ];
+
+            foreach (var claim in claims)
             {
-                throw new System.Exception("Failed to seed admin claim");
-            }
-        }
+                var claimResult = userManager.AddClaimAsync(adminUser, claim).Result;
 
+                if (!claimResult.Succeeded)
+                {
+                    throw new System.Exception("Failed to seed admin claim");
+                }
+            }
+
+        }
     }
 
     public static void SeedManager(UserManager<ApiUser> userManager)
@@ -50,7 +59,8 @@ public static class SeedAuthorization
         {
             var user = new ApiUser
             {
-                UserName = managerUsername
+                UserName = managerUsername,
+                FullName = "Zoe the manager"
             };
 
             var result = userManager.CreateAsync(user, managerPassword).Result;
@@ -61,13 +71,103 @@ public static class SeedAuthorization
             }
 
             var managerUser = userManager.FindByNameAsync(managerUsername).Result;
-            var claim = new Claim("IsManager", "true");
 
-            var claimResult = userManager.AddClaimAsync(managerUser, claim).Result;
+            List<Claim> claims =
+            [
+                new Claim("IsManager", "true"),
+                new Claim("Rank", "3")
+            ];
 
-            if (!claimResult.Succeeded)
+            foreach (var claim in claims)
             {
-                throw new System.Exception("Failed to seed manager claim");
+                var claimResult = userManager.AddClaimAsync(managerUser, claim).Result;
+
+                if (!claimResult.Succeeded)
+                {
+                    throw new System.Exception("Failed to seed manager claim: ");
+                }
+            }
+        }
+    }
+
+    public static void SeedBaker(UserManager<ApiUser> userManager)
+    {
+        const string bakerUsername = "baker";
+        const string bakerPassword = "baker123";
+
+        if (userManager.FindByNameAsync(bakerUsername).Result == null)
+        {
+            var user = new ApiUser
+            {
+                UserName = bakerUsername,
+                FullName = "Noah the master baker"
+            };
+
+            var result = userManager.CreateAsync(user, bakerPassword).Result;
+
+            if (!result.Succeeded)
+            {
+                throw new System.Exception("Failed to seed baker user");
+            }
+
+            var bakerUser = userManager.FindByNameAsync(bakerUsername).Result;
+
+            List<Claim> claims =
+            [
+                new Claim("IsBaker", "true"),
+                new Claim("Rank", "2")
+            ];
+
+
+            foreach (var claim in claims)
+            {
+                var claimResult = userManager.AddClaimAsync(bakerUser, claim).Result;
+
+                if (!claimResult.Succeeded)
+                {
+                    throw new System.Exception("Failed to seed baker claim");
+                }
+            }
+
+        }
+    }
+
+    public static void SeedDriver(UserManager<ApiUser> userManager)
+    {
+        const string driverUsername = "driver";
+        const string driverPassword = "driver123";
+
+        if (userManager.FindByNameAsync(driverUsername).Result == null)
+        {
+            var user = new ApiUser
+            {
+                UserName = driverUsername,
+                FullName = "Star the driver"
+            };
+
+            var result = userManager.CreateAsync(user, driverPassword).Result;
+
+            if (!result.Succeeded)
+            {
+                throw new System.Exception("Failed to seed driver user");
+            }
+
+            var driverUser = userManager.FindByNameAsync(driverUsername).Result;
+
+            List<Claim> claims =
+            [
+                new Claim("IsDriver", "true"),
+                new Claim("Rank", "1")
+            ];
+
+            foreach (var claim in claims)
+            {
+                var claimResult = userManager.AddClaimAsync(driverUser, claim).Result;
+
+                if (!claimResult.Succeeded)
+                {
+                    throw new System.Exception("Failed to seed driver claim");
+                }
             }
         }
     }

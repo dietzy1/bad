@@ -1,6 +1,7 @@
 ﻿using Bakery.Dtos;
 using Bakery.Models;
 using Bakery.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
@@ -19,7 +20,7 @@ namespace Bakery.Controllers
             BakingGoodRepository = bakingGoodRepository;
 
         }
-
+        [Authorize(Policy = "Driver")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder(int id, string? select)
         {
@@ -45,6 +46,8 @@ namespace Bakery.Controllers
             return Ok(bakingGoods);
         }
 
+
+        [Authorize(Policy = "Driver")]
         [HttpGet("{id}/Packets")]
         public async Task<IActionResult> GetPacketsOfOrder(int id)
         {

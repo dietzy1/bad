@@ -1,9 +1,11 @@
 ﻿using Bakery.Dtos;
 using Bakery.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bakery.Controllers
 {
+    [Authorize(Policy = "Baker")]
     [Route("v1/[controller]")]
     [ApiController]
     public class BatchesController : ControllerBase
@@ -16,6 +18,7 @@ namespace Bakery.Controllers
             BatchRepository = batchRepository;
             IngredientRepository = ingredientRepository;
         }
+
 
         [HttpGet("{id}/Ingredients")]
         public async Task<ActionResult<IEnumerable<IngredientDto>>> GetIngredientsOfBatch(int id)
