@@ -13,20 +13,16 @@ namespace Bakery.Controllers
 
         private readonly LogRepository LogRepository = logRepository;
 
-        //Rune Add some of the authorization shit here
-        /*    [HttpGet]
-           public async Task<ActionResult> GetLogs()
-           {
-               LogRepository.Tester();
-               return null;
-           } */
+
+
+        //Add query parameters to filter logs, like timestamp range, user, and HTTP method
+        [HttpGet]
+        public async Task<ActionResult> GetLogs(DateTime? startTimestamp, DateTime? endTimestamp, string user, string httpMethod)
+        {
+            var logs = await LogRepository.GetLogs(startTimestamp, endTimestamp, user, httpMethod);
+            return Ok(logs);
+
+
+        }
     }
-}
-
-
-
-//We need to add this somewhere idk DTO? Models to filter out shit
-public class LogEntry
-{
-
 }
