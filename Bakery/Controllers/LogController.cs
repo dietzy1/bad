@@ -2,6 +2,7 @@ using Bakery.Dtos;
 using Bakery.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Exception = System.Exception;
 
 namespace Bakery.Controllers
 {
@@ -10,16 +11,20 @@ namespace Bakery.Controllers
     [ApiController]
     public class LogController(LogRepository logRepository) : ControllerBase
     {
-
-        private readonly LogRepository LogRepository = logRepository;
-
-        //Rune Add some of the authorization shit here
-        /*    [HttpGet]
-           public async Task<ActionResult> GetLogs()
+        [HttpGet]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult> GetLogs(string userId = null, DateTime? startTime = null, DateTime? endTime = null, string operationType = null)
+       {
+           try
            {
-               LogRepository.Tester();
-               return null;
-           } */
+               var logs = await logRepository.GetLogs(userId, startTime, endTime, operationType);
+               return Ok(logs);
+           }
+           catch (Exception ex)
+           {
+               return StatusCode(500, ex.Message);
+           }
+       }
     }
 }
 
@@ -28,5 +33,7 @@ namespace Bakery.Controllers
 //We need to add this somewhere idk DTO? Models to filter out shit
 public class LogEntry
 {
-
+    public string UserId { get; set; }
+    public DateTime TimeStamp { get; set; }
+    public string OperationType { get; set; }
 }
