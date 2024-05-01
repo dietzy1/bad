@@ -2,6 +2,9 @@ using Bakery.Dtos;
 using Bakery.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Exception = System.Exception;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Bakery.Controllers
 {
@@ -10,19 +13,36 @@ namespace Bakery.Controllers
     [ApiController]
     public class LogController(LogRepository logRepository) : ControllerBase
     {
-
-        private readonly LogRepository LogRepository = logRepository;
-
-
-
-        //Add query parameters to filter logs, like timestamp range, user, and HTTP method
         [HttpGet]
-        public async Task<ActionResult> GetLogs(DateTime? startTimestamp, DateTime? endTimestamp, string user, string httpMethod)
+        public async Task<ActionResult<IEnumerable<LogEntry>>> GetLogs(string userId = null, DateTime? startTime = null, DateTime? endTime = null, string operationType = null)
         {
-            var logs = await LogRepository.GetLogs(startTimestamp, endTimestamp, user, httpMethod);
-            return Ok(logs);
-
-
+            try
+            {
+                var logs = await logRepository.GetLogs(userId, startTime, endTime, operationType);
+                return Ok(logs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
+}
+
+
+
+//We need to add this somewhere idk DTO? Models to filter out shit
+
+[BsonIgnoreExtraElements]
+public class LogEntry
+{
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string UserId { get; set; }
+    [BsonElement("Timestamp")]
+    public DateTime Timestamp { get; set; }
+    [BsonElement("Operation Type")]
+    public string OperationType { get; set; }
+    [BsonElement("Endpoint")]
+    public string Endpoint { get; set; }
 }
