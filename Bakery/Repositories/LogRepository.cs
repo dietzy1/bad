@@ -22,16 +22,6 @@ public class LogRepository
         var db = _client.GetDatabase("bakery");
         var collection = db.GetCollection<LogEntry>("logs_202405");
 
-        //Get all logs using find
-        var Results = collection.FindAsync(new BsonDocument()).Result.ToList();
-        //decode the results
-        foreach (var result in Results)
-        {
-            Console.WriteLine(result.ToJson());
-        }
-
-
-
         var builder = Builders<LogEntry>.Filter;
         var filter = builder.Empty;
 
@@ -50,9 +40,6 @@ public class LogRepository
         {
             filter &= builder.Eq(le => le.Properties.HttpMethod, operationType);
         }
-
-        Console.WriteLine($"Generated Filter: {filter.ToJson()}");
-
 
         return await collection.Find(filter).ToListAsync();
     }
