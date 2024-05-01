@@ -37,6 +37,9 @@ namespace Bakery.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto input)
         {
+            var loginfo = new { UserName = User.Identity?.Name, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
+            _logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -97,6 +100,9 @@ namespace Bakery.Controllers
                 {
                     return BadRequest("Invalid password");
                 }
+
+                var loginfo = new { UserName = user.FullName, HttpMethod = HttpContext.Request.Method, Endpoint = HttpContext.Request.Path, Timestamp = DateTime.UtcNow };
+                _logger.LogInformation("User {UserName} made a {HttpMethod} request to {Endpoint} at {Timestamp}", loginfo.UserName, loginfo.HttpMethod, loginfo.Endpoint, loginfo.Timestamp);
 
                 var signInCrendentials = new SigningCredentials(
                     new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"] ?? throw new Exception("JWT:SigningKey not found"))),

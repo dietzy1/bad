@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Bakery.Seed;
-using Amazon.Auth.AccessControlPolicy;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
