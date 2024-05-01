@@ -17,7 +17,7 @@ namespace Bakery.Controllers
 
         }
 
-        [Authorize(Policy = "Driver")]
+        [Authorize(Policy = "Manager")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BakingGoodDto>>> GetBakingGoods(string? select)
         {
