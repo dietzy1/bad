@@ -15,11 +15,16 @@ namespace Bakery.Controllers
     public class LogController(LogRepository logRepository) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LogEntry>>> GetLogs(string username = null, DateTime? startTime = null, DateTime? endTime = null, string operationType = null)
+        public async Task<ActionResult<IEnumerable<LogEntry>>> GetLogs(string username = "", DateTime? startTime = null, DateTime? endTime = null, string operationType = "")
         {
+            Console.WriteLine($"UserName: {username}, StartTime: {startTime}, EndTime: {endTime}, OperationType: {operationType}");
+
             try
             {
                 var logs = await logRepository.GetLogs(username, startTime, endTime, operationType);
+
+
+
                 return Ok(logs);
             }
             catch (Exception ex)
