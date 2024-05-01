@@ -1,7 +1,7 @@
 namespace Bakery.Repositories;
 
 using Microsoft.EntityFrameworkCore;
-using Models;
+using Bakery.Models;
 
 public class IngredientRepository : Repository
 {
@@ -11,7 +11,7 @@ public class IngredientRepository : Repository
     {
         return await Context.Ingredients.ToArrayAsync();
     }
-    
+
     public async Task<Ingredient[]> ListIngredientsInBatch(int batchId)
     {
         return await Context.Ingredients

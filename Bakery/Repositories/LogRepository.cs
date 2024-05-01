@@ -1,56 +1,57 @@
-
-using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
-using Serilog;
-
+using Bakery.Models;
 
 namespace Bakery.Repositories;
 
 public class LogRepository
 {
-    private readonly IMongoCollection<LogEntry> _logCollection;
+    private MongoClient _client;
 
     public LogRepository(string connectionString)
     {
+        Console.WriteLine(connectionString);
         var mongoUrl = new MongoUrl(connectionString);
-        var client = new MongoClient(mongoUrl);
-        var database = client.GetDatabase(mongoUrl.DatabaseName);
-        _logCollection = database.GetCollection<LogEntry>("logs");
+        _client = new MongoClient(mongoUrl);
     }
 
     //Filter for specific user, timeInterval, and type of operation, post, put, delete
-    public async Task<IEnumerable<LogEntry>> GetLogs(string userId = null!, DateTime? startTime = null, DateTime? endTime = null, string operationType = null)
+    public async Task<IEnumerable<LogEntry>> GetLogs(string userName = "", DateTime? startTime = null, DateTime? endTime = null, string operationType = "")
     {
-        Console.WriteLine("TESTING");
+        var db = _client.GetDatabase("bakery");
+        var collection = db.GetCollection<LogEntry>("logs_202405");
+
+
+        var stuff = collection.Find(_ => true);
+        var count = stuff.CountDocuments();
+        Console.WriteLine("number of documents found: " + count);
+
+        //return await stuff.ToListAsync();
 
         var builder = Builders<LogEntry>.Filter;
         var filter = builder.Empty;
 
-        var logs = _logCollection.Find(log => true);
-        var count = logs.CountDocuments();
+        if (!string.IsNullOrEmpty(userName))
+        {
+            filter &= builder.Eq(le => le.UserName, userName);
 
-        Console.WriteLine("number of documents found: " + count);
-        return await logs.ToListAsync();
+        }
+        if (startTime.HasValue && endTime.HasValue)
+        {
+            //Find all timestamps inbetween the timeinterval of startTime and endTime
+            filter &= builder.Gte(le => le.Timestamp, startTime.Value);
+            filter &= builder.Lte(le => le.Timestamp, endTime.Value);
+        }
+        if (!string.IsNullOrEmpty(operationType))
+        {
+            filter &= builder.Eq(le => le.HttpMethod, operationType);
+        }
 
-        //return logs;
+        var logs = await collection.Find(filter).ToListAsync();
+        return logs;
     }
-
-    /*
-    if (!string.IsNullOrEmpty(userId))
-    {
-        filter &= builder.Eq(le => le.UserId, userId);
-    }
-    if (startTime.HasValue && endTime.HasValue)
-    {
-        filter &= builder.Gte(le => le.TimeStamp, startTime.Value);
-        filter &= builder.Lte(le => le.TimeStamp, endTime.Value);
-    }
-    if (!string.IsNullOrEmpty(operationType))
-    {
-        filter &= builder.Eq(le => le.OperationType, operationType);
-    }
-
-    var logs = await _logCollection.Find(filter).ToListAsync();
-    return logs;
-    */
 }
+
+
+
+
+
