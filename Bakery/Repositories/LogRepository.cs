@@ -20,13 +20,6 @@ public class LogRepository
         var db = _client.GetDatabase("bakery");
         var collection = db.GetCollection<LogEntry>("logs_202405");
 
-
-        var stuff = collection.Find(_ => true);
-        var count = stuff.CountDocuments();
-        Console.WriteLine("number of documents found: " + count);
-
-        //return await stuff.ToListAsync();
-
         var builder = Builders<LogEntry>.Filter;
         var filter = builder.Empty;
 
@@ -46,8 +39,8 @@ public class LogRepository
             filter &= builder.Eq(le => le.HttpMethod, operationType);
         }
 
-        var logs = await collection.Find(filter).ToListAsync();
-        return logs;
+        return await collection.Find(filter).ToListAsync();
+
     }
 }
 
